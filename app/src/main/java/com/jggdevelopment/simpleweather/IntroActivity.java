@@ -95,7 +95,7 @@ public class IntroActivity extends AppCompatActivity {
     private void setIntroShown() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("wasIntroOpnend",true);
+        editor.putBoolean("wasIntroOpened",true);
         editor.apply();
     }
 

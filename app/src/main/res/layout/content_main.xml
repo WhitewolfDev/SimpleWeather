@@ -28,23 +28,56 @@
                 android:layout_height="match_parent">
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/sun"
+                    android:id="@+id/weatherIcon"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="sun.json"
+                    app:lottie_fileName="drizzle.json"
                     app:lottie_loop="true"
                     app:lottie_speed="1" />
 
-                <TextView
-                    android:id="@+id/temperature"
+                <LinearLayout
+                    android:id="@+id/temperatureGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="48sp"
-                    android:layout_toEndOf="@id/sun"
-                    android:textColor="#2b2b2b"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/weatherIcon"
+                    android:orientation="vertical"
+                    android:layout_marginStart="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/high_temp"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="56sp"
+                        android:textColor="@android:color/white"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/low_temp"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/weatherDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/temperatureGroup"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"/>
 
             </RelativeLayout>
 

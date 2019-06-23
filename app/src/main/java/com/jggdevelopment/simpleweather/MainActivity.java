@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,12 +17,14 @@ import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import android.provider.Settings;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.jggdevelopment.simpleweather.adapters.CustomPagerAdapter;
@@ -36,7 +39,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.nio.file.AccessDeniedException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -52,26 +56,39 @@ public class MainActivity extends AppCompatActivity
 
 
     private static String baseUrl = "http://api.openweathermap.org/";
-    private static String appId = "f691cee42c14e29308b7dcc0ecace654";
+    private static String openWeatherMapId;
     private static String lat;
     private static String lon;
     private TextView temperatureView;
+    private TextView highTemp;
+    private TextView lowTemp;
+    private TextView description;
     private LocationManager locationManager;
+    int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-        } else {
-            getLocation();
+        ApplicationInfo app = null;
+        try {
+            app = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
 
+        Bundle bundle = app.metaData;
+        // Initialize Places.
+        Places.initialize(getApplicationContext(), bundle.getString("com.google.android.geo.API_KEY"));
+        PlacesClient placesClient = Places.createClient(this);
+        openWeatherMapId = bundle.getString("openWeatherMapAPI_KEY");
+
         // fill weatherResponse object with current weather data on app open
-        getCurrentData();
+        temperatureView = findViewById(R.id.temperature);
+        highTemp = findViewById(R.id.high_temp);
+        lowTemp = findViewById(R.id.low_temp);
+        description = findViewById(R.id.weatherDescription);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -90,6 +107,15 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.weather_tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        } else {
+            getLocation();
+        }
+
+        getCurrentData();
     }
 
     private void getLocation() {
@@ -151,8 +177,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
         return true;
     }
 
@@ -161,14 +187,27 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        if (item.getItemId() == R.id.search_button) {
+            List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            // Start the autocomplete intent.
+            Intent intent = new Autocomplete.IntentBuilder(
+                    AutocompleteActivityMode.OVERLAY, fields)
+                    .build(this);
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                setLocation(place.getLatLng().latitude, place.getLatLng().longitude, place.getName());
+            }
+        }
     }
 
     @Override
@@ -202,14 +241,12 @@ public class MainActivity extends AppCompatActivity
                 .build();
 
         WeatherService service = retrofit.create(WeatherService.class);
-        Call<WeatherResponse> call = service.getCurrentWeatherData(lat, lon, appId);
+        Call<WeatherResponse> call = service.getCurrentWeatherData(lat, lon, openWeatherMapId);
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
                 if (response.code() == 200) {
-                    getSupportActionBar().setTitle(response.body().name);
-                    temperatureView = findViewById(R.id.temperature);
-                    temperatureView.setText(getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%d", response.body().main.getTemperature("F"))));
+                    updateViews(response.body());
                 }
             }
 
@@ -220,6 +257,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    private void updateViews(WeatherResponse response) {
+        updateToolbarTitle(response.name);
+        temperatureView.setText(getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%d", response.main.getTemperature("F"))));
+        highTemp.setText(getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%d", response.main.getTempMax("F"))));
+        lowTemp.setText(getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%d", response.main.getTempMin("F"))));
+
+        String capsDescription = response.weather.get(0).description.substring(0, 1).toUpperCase() + response.weather.get(0).description.substring(1);
+        description.setText(capsDescription);
     }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
@@ -248,5 +295,16 @@ public class MainActivity extends AppCompatActivity
                 });
         final AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void setLocation(double latitude, double longitude, String name) {
+        this.lat = Double.toString(latitude);
+        this.lon = Double.toString(longitude);
+        getCurrentData();
+        updateToolbarTitle(name);
+    }
+
+    public void updateToolbarTitle(String name) {
+        getSupportActionBar().setTitle(name);
     }
 }
