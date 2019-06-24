@@ -60,9 +60,7 @@ public class IntroActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            endIntro();
-        } else {
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
                     showMessageOKCancel("Location access is required for us to provide accurate weather data", new DialogInterface.OnClickListener() {

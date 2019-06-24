@@ -16,6 +16,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "googlePlacesAPI_KEY", googlePlacesAPI_KEY
+            buildConfigField 'String', "darkSkyAPI_KEY", darkSkyAPI_KEY
+        }
+        dev {
+            debuggable = true
+            proguardFiles
+        }
+        debug {
+            buildConfigField 'String', "googlePlacesAPI_KEY", googlePlacesAPI_KEY
+            buildConfigField 'String', "darkSkyAPI_KEY", darkSkyAPI_KEY
         }
     }
 }
