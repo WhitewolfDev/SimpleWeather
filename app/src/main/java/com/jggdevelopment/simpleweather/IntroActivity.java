@@ -66,13 +66,13 @@ public class IntroActivity extends AppCompatActivity {
                     showMessageOKCancel("Location access is required for us to provide accurate weather data", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[] {ACCESS_FINE_LOCATION}, 200);
-                            }
+                            requestPermissions(new String[] {ACCESS_FINE_LOCATION}, 200);
                         }
                     });
                 }
             }
+        } else {
+            endIntro();
         }
     }
 

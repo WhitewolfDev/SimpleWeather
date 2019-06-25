@@ -23,6 +23,9 @@
     <string name="formattedLowTemperature">\u2193 Low %1$s\u00B0</string>
     <string name="formattedPrecipitationChance">%1$s%%</string>
 
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer closed</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_intro">Simple Weather</string>

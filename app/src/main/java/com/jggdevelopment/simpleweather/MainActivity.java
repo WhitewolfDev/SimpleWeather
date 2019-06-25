@@ -12,10 +12,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
+import android.view.View;
+
 import static com.jggdevelopment.simpleweather.utilities.FragmentHelper.pushToFragmentManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +28,25 @@ public class MainActivity extends AppCompatActivity
         // Setup the content view
         setContentView(R.layout.activity_main);
 
+        drawer = findViewById(R.id.drawer_layout);
+
         // This is a mostly blank activity, so MasterFragment needs to be pushed onto the content_frame
         pushToFragmentManager(getSupportFragmentManager(), R.id.content_frame, new MasterFragment(), false);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     @Override
     public void onBackPressed() {

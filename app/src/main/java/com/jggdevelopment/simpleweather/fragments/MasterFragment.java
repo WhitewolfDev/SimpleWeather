@@ -2,13 +2,16 @@ package com.jggdevelopment.simpleweather.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -21,15 +24,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.tabs.TabLayout;
+import com.jggdevelopment.simpleweather.BuildConfig;
 import com.jggdevelopment.simpleweather.MainActivity;
 import com.jggdevelopment.simpleweather.R;
 import com.jggdevelopment.simpleweather.WeatherLocation;
 import com.jggdevelopment.simpleweather.adapters.CustomPagerAdapter;
 import com.jggdevelopment.simpleweather.models.Forecast;
 import com.jggdevelopment.simpleweather.services.WeatherAPIUtils;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -46,17 +52,24 @@ public class MasterFragment extends Fragment {
 
     private View view;
     private LocationManager locationManager;
+    private ActionBarDrawerToggle drawerToggle;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Mapbox.getInstance(getContext(), BuildConfig.mapboxAPI_KEY);
+
         // Only inflate the view and do setup if the view is null, to prevent pop in of data and unnecessary API calls
         if (view == null) {
             this.view = inflater.inflate(R.layout.fragment_master, container, false);
 
-            Toolbar toolbar = view.findViewById(R.id.toolbar);
+            toolbar = view.findViewById(R.id.toolbar);
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+            drawerLayout = getActivity().findViewById(R.id.drawer_layout);
 
             // setup ViewPager and its adapter
             ViewPager viewPager = view.findViewById(R.id.main_viewpager);
@@ -69,6 +82,29 @@ public class MasterFragment extends Fragment {
             // Fetch the location data and setup
             initializeWeatherData();
         }
+
+        drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar,  R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                //getActionBar().setTitle(mTitle);
+                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                //getActionBar().setTitle(mDrawerTitle);
+                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        drawerLayout.addDrawerListener(drawerToggle);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        drawerToggle.syncState();
 
         setHasOptionsMenu(true);
         return view;
@@ -90,8 +126,12 @@ public class MasterFragment extends Fragment {
             List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME);
 
             // Start the autocomplete intent.
-            Intent intent = new Autocomplete.IntentBuilder(
-                    AutocompleteActivityMode.OVERLAY, fields)
+            Intent intent = new PlaceAutocomplete.IntentBuilder()
+                    .accessToken(Mapbox.getAccessToken())
+                    .placeOptions(PlaceOptions.builder()
+                            .backgroundColor(Color.parseColor("#EEEEEE"))
+                            .limit(10)
+                            .build(PlaceOptions.MODE_CARDS))
                     .build(getActivity());
             startActivityForResult(intent, 1);
         }
@@ -103,8 +143,8 @@ public class MasterFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                initializeWeatherData(place.getLatLng().latitude, place.getLatLng().longitude);
+                CarmenFeature feature = PlaceAutocomplete.getPlace(data);
+                initializeWeatherData(feature.center().latitude(), feature.center().longitude());
             }
         }
     }
@@ -148,7 +188,7 @@ public class MasterFragment extends Fragment {
         highTemp.setText(getActivity().getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.1f", weatherData.getDaily().getData().get(0).getTemperatureMax())));
         lowTemp.setText(getActivity().getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMin())));
         description.setText(weatherData.getCurrently().getSummary());
-        precipitationChance.setText(getActivity().getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getPrecipProbability() * 100)));
+        precipitationChance.setText(getActivity().getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.getHourly().getData().get(0).getPrecipProbability() * 100)));
     }
 
     /**
