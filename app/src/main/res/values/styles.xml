@@ -22,4 +22,9 @@
         <item name="android:src">@drawable/ic_search_white</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">#0C0C0C</item>
+    </style>
+
 </resources>

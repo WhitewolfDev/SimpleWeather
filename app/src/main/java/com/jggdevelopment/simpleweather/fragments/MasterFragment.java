@@ -1,7 +1,9 @@
 package com.jggdevelopment.simpleweather.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -55,10 +57,13 @@ public class MasterFragment extends Fragment {
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+    private SharedPreferences prefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        prefs = getActivity().getSharedPreferences("com.jggdevelopment.simpleweather", Context.MODE_PRIVATE);
 
         Mapbox.getInstance(getContext(), BuildConfig.mapboxAPI_KEY);
 
@@ -79,8 +84,14 @@ public class MasterFragment extends Fragment {
             TabLayout tabLayout = (TabLayout) view.findViewById(R.id.weather_tabs);
             tabLayout.setupWithViewPager(viewPager);
 
+            // if default location is set, initialize weather on that, else do it with found location
+            if (prefs.getBoolean("defaultLocationSet", false)) {
+                initializeWeatherData(Double.parseDouble(prefs.getString("defaultLatitude", "0")), Double.parseDouble(prefs.getString("defaultLongitude", "0")));
+            } else {
+                initializeWeatherData();
+            }
             // Fetch the location data and setup
-            initializeWeatherData();
+
         }
 
         drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar,  R.string.drawer_open, R.string.drawer_close) {
@@ -123,7 +134,6 @@ public class MasterFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == R.id.search_button) {
-            List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.NAME);
 
             // Start the autocomplete intent.
             Intent intent = new PlaceAutocomplete.IntentBuilder()

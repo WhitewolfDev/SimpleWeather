@@ -25,6 +25,7 @@
 
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer closed</string>
+    <string name="locationAccessDeniedMessage">Since you chose not to enable location sharing, you will need to enter a default location.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
