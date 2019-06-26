@@ -67,11 +67,11 @@ public class WeatherLocation {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
             } else if (location1 != null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                latitude = location1.getLatitude();
+                longitude = location1.getLongitude();
             } else if (location2 != null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                latitude = location2.getLatitude();
+                longitude = location2.getLongitude();
             } else {
                 Toast.makeText(activity, "Unable to get location", Toast.LENGTH_LONG).show();
             }
