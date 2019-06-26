@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SettingsFragment">
+
+    <androidx.preference.PreferenceCategory
+        android:layout_width="match_parent"
+        android:key="General"
+        android:title="General">
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="useLocation"
+            android:summary="Use current location as default"
+            android:title="Use location" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="useCelsius"
+            android:summary="Change your default units to Celsius"
+            android:title="Use Celsius" />
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

@@ -63,19 +63,29 @@ public class IntroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * End intro to be called when user does not allow location data
+     * @param point point representing the location they entered manually
+     */
     private void endIntro(Point point) {
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
 
         prefs.edit().putString("defaultLatitude", Double.toString(point.latitude())).commit();
         prefs.edit().putString("defaultLongitude", Double.toString(point.longitude())).commit();
-        prefs.edit().putBoolean("defaultLocationSet", true).commit();
+        prefs.edit().putBoolean("locationPermissionAllowed", false).commit();
+        prefs.edit().putBoolean("useCelsius", false).commit();
         startActivity(mainActivity);
         setIntroShown();
         finish();
     }
 
+    /**
+     * End intro to be called when user allows location permission
+     */
     private void endIntro() {
-        prefs.edit().putBoolean("defaultLocationSet", false).commit();
+        prefs.edit().putBoolean("locationPermissionAllowed", true).commit();
+        prefs.edit().putBoolean("useCurrentLocation", true).commit();
+        prefs.edit().putBoolean("useCelsius", false).commit();
 
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);

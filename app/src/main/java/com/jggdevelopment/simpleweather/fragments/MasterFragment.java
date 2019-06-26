@@ -58,6 +58,7 @@ public class MasterFragment extends Fragment {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private SharedPreferences prefs;
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,14 +85,14 @@ public class MasterFragment extends Fragment {
             TabLayout tabLayout = (TabLayout) view.findViewById(R.id.weather_tabs);
             tabLayout.setupWithViewPager(viewPager);
 
-            // if default location is set, initialize weather on that, else do it with found location
-            if (prefs.getBoolean("defaultLocationSet", false)) {
+            // if location permission not allowed, initialize weather on default location, else do it with found location
+            if (!prefs.getBoolean("locationPermissionAllowed", false)) {
                 initializeWeatherData(Double.parseDouble(prefs.getString("defaultLatitude", "0")), Double.parseDouble(prefs.getString("defaultLongitude", "0")));
             } else {
                 initializeWeatherData();
             }
-            // Fetch the location data and setup
 
+            setupPreferencesListener();
         }
 
         drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar,  R.string.drawer_open, R.string.drawer_close) {
@@ -122,6 +123,22 @@ public class MasterFragment extends Fragment {
     }
 
 
+    private void setupPreferencesListener() {
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if (key.equals("useCurrentLocation")) {
+                    if (prefs.getBoolean("useCurrentLocation", false)) {
+                        initializeWeatherData();
+                    } else {
+                        initializeWeatherData(Double.parseDouble(prefs.getString("defaultLatitude", "0")), Double.parseDouble(prefs.getString("defaultLongitude", "0")));
+                    }
+                }
+
+            }
+        };
+
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
@@ -166,6 +183,8 @@ public class MasterFragment extends Fragment {
     private void initializeWeatherData() {
         // get the user's current location
         WeatherLocation location = new WeatherLocation(getActivity());
+        prefs.edit().putString("defaultLatitude", Double.toString(location.getLatitude())).commit();
+        prefs.edit().putString("defaultLongitude", Double.toString(location.getLongitude())).commit();
 
         // get the current conditions.  If the response is successful, it will call
         // updateConditions() below with the retrieved data
@@ -194,8 +213,8 @@ public class MasterFragment extends Fragment {
         TextView precipitationChance = view.findViewById(R.id.precipitation_chance);
 
         updateToolbarTitle(getActivity(), weatherData.getLatitude(), weatherData.getLongitude());
-        temperatureView.setText(getActivity().getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%.1f", weatherData.getCurrently().getTemperature())));
-        highTemp.setText(getActivity().getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.1f", weatherData.getDaily().getData().get(0).getTemperatureMax())));
+        temperatureView.setText(getActivity().getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getTemperature())));
+        highTemp.setText(getActivity().getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMax())));
         lowTemp.setText(getActivity().getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMin())));
         description.setText(weatherData.getCurrently().getSummary());
         precipitationChance.setText(getActivity().getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.getHourly().getData().get(0).getPrecipProbability() * 100)));

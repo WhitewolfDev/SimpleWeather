@@ -1,23 +1,14 @@
 package com.jggdevelopment.simpleweather.services;
 
-import android.app.Activity;
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Build;
-import android.view.View;
+import android.content.SharedPreferences;
 import android.widget.TextView;
 
-import com.jggdevelopment.simpleweather.BuildConfig;
-import com.jggdevelopment.simpleweather.MainActivity;
-import com.jggdevelopment.simpleweather.R;
-import com.jggdevelopment.simpleweather.fragments.MasterFragment;
-import com.jggdevelopment.simpleweather.models.Currently;
-import com.jggdevelopment.simpleweather.models.Forecast;
+import androidx.preference.PreferenceManager;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import com.jggdevelopment.simpleweather.BuildConfig;
+import com.jggdevelopment.simpleweather.fragments.MasterFragment;
+import com.jggdevelopment.simpleweather.models.Forecast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +24,7 @@ public class WeatherAPIUtils {
     private static TextView lowTemp;
     private static TextView description;
     private static TextView precipitationChance;
+    private static SharedPreferences prefs;
 
     /**
      * uses retrofit to call the DarkSky API using the API key in the baseURL
@@ -56,20 +48,37 @@ public class WeatherAPIUtils {
      */
     public static void getCurrentWeatherData(Double lat, Double lon, final MasterFragment fragment) {
         WeatherService service = getWeatherService();
+        prefs = fragment.getActivity().getSharedPreferences("com.jggdevelopment.simpleweather", Context.MODE_PRIVATE);
 
-        service.getWeather(lat, lon).enqueue(new Callback<Forecast>() {
-            @Override
-            public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-                if (response.isSuccessful()) {
-                    fragment.updateConditions(response.body());
+        if (prefs.getBoolean("useCelsius", false)) {
+            service.getWeatherSI(lat, lon, "si").enqueue(new Callback<Forecast>() {
+                @Override
+                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
+                    if (response.isSuccessful()) {
+                        fragment.updateConditions(response.body());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Forecast> call, Throwable t) {
+                @Override
+                public void onFailure(Call<Forecast> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else {
+            service.getWeatherImperial(lat, lon).enqueue(new Callback<Forecast>() {
+                @Override
+                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
+                    if (response.isSuccessful()) {
+                        fragment.updateConditions(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Forecast> call, Throwable t) {
+
+                }
+            });
+        }
     }
 
 
