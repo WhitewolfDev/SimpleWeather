@@ -10,6 +10,10 @@ import com.jggdevelopment.simpleweather.BuildConfig;
 import com.jggdevelopment.simpleweather.fragments.MasterFragment;
 import com.jggdevelopment.simpleweather.models.Forecast;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,10 +37,27 @@ public class WeatherAPIUtils {
     private static WeatherService getWeatherService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .client(getHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         return retrofit.create(WeatherService.class);
+    }
+
+    public static OkHttpClient getHttpClient() {
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(300, TimeUnit.SECONDS)
+                .readTimeout(300,TimeUnit.SECONDS).
+                        addInterceptor(logging).
+                        build();
+
+        return client;
     }
 
     /**
@@ -75,11 +96,9 @@ public class WeatherAPIUtils {
 
                 @Override
                 public void onFailure(Call<Forecast> call, Throwable t) {
-
+                    t.printStackTrace();
                 }
             });
         }
     }
-
-
 }

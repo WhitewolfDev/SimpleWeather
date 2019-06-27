@@ -28,7 +28,7 @@ public class Forecast {
     private Minutely minutely;
     @SerializedName("offset")
     @Expose
-    private Integer offset;
+    private Double offset;
     @SerializedName("timezone")
     @Expose
     private String timezone;
@@ -89,11 +89,11 @@ public class Forecast {
         this.minutely = minutely;
     }
 
-    public Integer getOffset() {
+    public Double getOffset() {
         return offset;
     }
 
-    public void setOffset(Integer offset) {
+    public void setOffset(Double offset) {
         this.offset = offset;
     }
 

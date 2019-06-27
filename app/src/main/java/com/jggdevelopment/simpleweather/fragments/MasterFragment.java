@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.tabs.TabLayout;
@@ -226,7 +227,7 @@ public class MasterFragment extends Fragment {
      * @param lat latitude of city
      * @param lon longitude of city
      */
-    public static void updateToolbarTitle(Activity activity, Double lat, Double lon) {
+    public void updateToolbarTitle(Activity activity, Double lat, Double lon) {
         Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
         List<Address> addresses = null;
         try {
@@ -234,7 +235,20 @@ public class MasterFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String cityName = addresses.get(0).getLocality();
-        ((MainActivity)activity).getSupportActionBar().setTitle(cityName);
+
+        String title = "Weather";
+        if (addresses != null) {
+            if (addresses.get(0).getLocality() != null) {
+                title = addresses.get(0).getLocality();
+            } else if (addresses.get(0).getSubLocality() != null) {
+                title = addresses.get(0).getSubLocality();
+            } else if (addresses.get(0).getSubAdminArea() != null) {
+                title = addresses.get(0).getSubAdminArea();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_LONG).show();
+        }
+
+        ((MainActivity)activity).getSupportActionBar().setTitle(title);
     }
 }
