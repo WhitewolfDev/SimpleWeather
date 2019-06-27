@@ -8,14 +8,13 @@ android {
         applicationId "com.jggdevelopment.simpleweather"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 7
-        versionName "0.03.01"
+        versionCode 8
+        versionName "0.03.02"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "googlePlacesAPI_KEY", googlePlacesAPI_KEY
             buildConfigField 'String', "darkSkyAPI_KEY", darkSkyAPI_KEY
