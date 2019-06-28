@@ -2,17 +2,21 @@ package com.jggdevelopment.simpleweather.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -23,6 +27,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +53,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -60,6 +69,13 @@ public class MasterFragment extends Fragment {
     private DrawerLayout drawerLayout;
     private SharedPreferences prefs;
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private ImageView locationButton;
+    private TextView temperatureView;
+    private TextView highTemp;
+    private TextView lowTemp;
+    private TextView description;
+    private TextView precipitationChance;
+    private ImageView precipImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,18 +89,7 @@ public class MasterFragment extends Fragment {
         if (view == null) {
             this.view = inflater.inflate(R.layout.fragment_master, container, false);
 
-            toolbar = view.findViewById(R.id.toolbar);
-            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-
-            drawerLayout = getActivity().findViewById(R.id.drawer_layout);
-
-            // setup ViewPager and its adapter
-            ViewPager viewPager = view.findViewById(R.id.main_viewpager);
-            viewPager.setAdapter(new CustomPagerAdapter(getContext(), getActivity().getSupportFragmentManager()));
-
-            // setup TabLayout and connect it to the ViewPager
-            TabLayout tabLayout = (TabLayout) view.findViewById(R.id.weather_tabs);
-            tabLayout.setupWithViewPager(viewPager);
+            setupViews();
 
             // if location permission not allowed, initialize weather on default location, else do it with found location
             if (!prefs.getBoolean("locationPermissionAllowed", false)) {
@@ -123,6 +128,41 @@ public class MasterFragment extends Fragment {
         return view;
     }
 
+    private void setupViews() {
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+
+        // setup ViewPager and its adapter
+        ViewPager viewPager = view.findViewById(R.id.main_viewpager);
+        viewPager.setAdapter(new CustomPagerAdapter(getContext(), getActivity().getSupportFragmentManager()));
+
+        // setup TabLayout and connect it to the ViewPager
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.weather_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        locationButton = toolbar.findViewById(R.id.locationButton);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestPermissions(new String[] {ACCESS_FINE_LOCATION}, 200);
+            }
+        });
+
+        temperatureView = view.findViewById(R.id.temperature);
+        highTemp = view.findViewById(R.id.high_temp);
+        lowTemp = view.findViewById(R.id.low_temp);
+        description = view.findViewById(R.id.weatherDescription);
+        precipitationChance = view.findViewById(R.id.precipitation_chance);
+        precipImage = view.findViewById(R.id.precipImage);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        initializeWeatherData();
+    }
 
     private void setupPreferencesListener() {
         listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -189,6 +229,7 @@ public class MasterFragment extends Fragment {
 
         // get the current conditions.  If the response is successful, it will call
         // updateConditions() below with the retrieved data
+
         WeatherAPIUtils.getCurrentWeatherData(location.getLatitude(), location.getLongitude(), this);
 
     }
@@ -207,18 +248,25 @@ public class MasterFragment extends Fragment {
      * @param weatherData data retrieved from API call
      */
     public void updateConditions(Forecast weatherData) {
-        TextView temperatureView = view.findViewById(R.id.temperature);
-        TextView highTemp = view.findViewById(R.id.high_temp);
-        TextView lowTemp = view.findViewById(R.id.low_temp);
-        TextView description = view.findViewById(R.id.weatherDescription);
-        TextView precipitationChance = view.findViewById(R.id.precipitation_chance);
+        AlphaAnimation in = new AlphaAnimation(0.0f, 1.0f);
+        in.setDuration(1500);
 
-        updateToolbarTitle(getActivity(), weatherData.getLatitude(), weatherData.getLongitude());
+        updateToolbar(getActivity(), weatherData.getLatitude(), weatherData.getLongitude());
         temperatureView.setText(getActivity().getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getTemperature())));
         highTemp.setText(getActivity().getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMax())));
         lowTemp.setText(getActivity().getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMin())));
         description.setText(weatherData.getCurrently().getSummary());
         precipitationChance.setText(getActivity().getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.getHourly().getData().get(0).getPrecipProbability() * 100)));
+
+        temperatureView.startAnimation(in);
+        highTemp.startAnimation(in);
+        lowTemp.startAnimation(in);
+        description.startAnimation(in);
+        precipitationChance.startAnimation(in);
+        precipImage.setVisibility(View.VISIBLE);
+        precipImage.startAnimation(in);
+
+
     }
 
     /**
@@ -227,7 +275,7 @@ public class MasterFragment extends Fragment {
      * @param lat latitude of city
      * @param lon longitude of city
      */
-    public void updateToolbarTitle(Activity activity, Double lat, Double lon) {
+    public void updateToolbar(Activity activity, Double lat, Double lon) {
         Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
         List<Address> addresses = null;
         try {
@@ -250,5 +298,7 @@ public class MasterFragment extends Fragment {
         }
 
         ((MainActivity)activity).getSupportActionBar().setTitle(title);
+
+
     }
 }

@@ -109,12 +109,7 @@ public class IntroActivity extends AppCompatActivity {
         if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {
-                    showMessageGetLocation(getString(R.string.locationAccessDeniedMessage), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            requestPermissions(new String[] {ACCESS_FINE_LOCATION}, 200);
-                        }
-                    });
+                    showMessageGetLocation(getString(R.string.locationAccessDeniedMessage));
                 }
             }
         } else {
@@ -122,7 +117,7 @@ public class IntroActivity extends AppCompatActivity {
         }
     }
 
-    private void showMessageGetLocation(String message, DialogInterface.OnClickListener okListener) {
+    private void showMessageGetLocation(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
         builder.setTitle("Default Location");
         builder.setMessage(message);
