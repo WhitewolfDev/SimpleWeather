@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.tabs.TabLayout;
 import com.jggdevelopment.simpleweather.BuildConfig;
@@ -76,6 +77,7 @@ public class MasterFragment extends Fragment {
     private TextView description;
     private TextView precipitationChance;
     private ImageView precipImage;
+    private LottieAnimationView weatherIcon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -156,6 +158,8 @@ public class MasterFragment extends Fragment {
         description = view.findViewById(R.id.weatherDescription);
         precipitationChance = view.findViewById(R.id.precipitation_chance);
         precipImage = view.findViewById(R.id.precipImage);
+        weatherIcon = view.findViewById(R.id.weatherIcon);
+
     }
 
     @Override
@@ -265,8 +269,43 @@ public class MasterFragment extends Fragment {
         precipitationChance.startAnimation(in);
         precipImage.setVisibility(View.VISIBLE);
         precipImage.startAnimation(in);
+        weatherIcon.startAnimation(in);
 
+        setIconAnimation(weatherData);
+    }
 
+    public void setIconAnimation(Forecast weatherData) {
+        switch (weatherData.getCurrently().getIcon()) {
+            case "clear-day":
+                weatherIcon.setAnimation("sun.json");
+                break;
+
+            case "clear-night":
+                weatherIcon.setAnimation("clearNight.json");
+                break;
+
+            case "rain":
+                weatherIcon.setAnimation("drizzle.json");
+                break;
+
+            case "cloudy":
+                weatherIcon.setAnimation("Overcast.json");
+                break;
+
+            case "partly-cloudy-day":
+                weatherIcon.setAnimation("partlyCloudy.json");
+                break;
+
+            case "partly-cloudy-night":
+                weatherIcon.setAnimation("partlyCloudyNight.json");
+                break;
+
+            default:
+                weatherIcon.setAnimation("heavyThunderstorm.json");
+                break;
+        }
+
+        weatherIcon.playAnimation();
     }
 
     /**

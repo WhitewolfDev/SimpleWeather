@@ -16,7 +16,7 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="256dp"
+            android:layout_height="500dp"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
@@ -26,87 +26,90 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/weatherIcon"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="drizzle.json"
-                    app:lottie_loop="true"
-                    app:lottie_speed="1" />
-
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/temperatureGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/weatherIcon"
                     android:orientation="vertical"
                     android:layout_marginStart="24dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/high_temp"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
 
                     <TextView
                         android:id="@+id/temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="56sp"
+                        android:layout_marginTop="100dp"
+                        android:textSize="112sp"
+                        android:fontFamily="@font/roboto_thin"
                         android:textColor="@android:color/white"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/low_temp"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
-                </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/temperature">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/high_temp"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/low_temp"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"/>
+                        </LinearLayout>
+                </RelativeLayout>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/weatherIcon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="48dp"
+                    android:layout_toEndOf="@id/temperatureGroup"
+                    android:layout_marginTop="135dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_speed="1" />
+
+                <TextView
+                    android:id="@+id/weatherDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/temperatureGroup"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/temperatureGroup"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
                     android:layout_marginStart="24dp"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
+                    android:layout_below="@id/weatherDescription">
+
+                    <ImageView
+                        android:id="@+id/precipImage"
+                        android:visibility="invisible"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/drop"
+                        android:layout_gravity="center"/>
 
                     <TextView
-                        android:id="@+id/weatherDescription"
+                        android:id="@+id/precipitation_chance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
+                        android:layout_marginStart="4dp"
                         android:textColor="@android:color/white"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="12dp">
-
-                        <ImageView
-                            android:id="@+id/precipImage"
-                            android:visibility="invisible"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/drop"
-                            android:layout_gravity="center"/>
-
-                        <TextView
-                            android:id="@+id/precipitation_chance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:layout_marginStart="4dp"
-                            android:textColor="@android:color/white"/>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
