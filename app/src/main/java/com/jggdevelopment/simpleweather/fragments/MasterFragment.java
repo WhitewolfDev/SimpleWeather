@@ -201,6 +201,7 @@ public class MasterFragment extends Fragment {
             Intent intent = new PlaceAutocomplete.IntentBuilder()
                     .accessToken(Mapbox.getAccessToken())
                     .placeOptions(PlaceOptions.builder()
+                            .language(Locale.getDefault().getLanguage())
                             .backgroundColor(Color.parseColor("#EEEEEE"))
                             .limit(10)
                             .build(PlaceOptions.MODE_CARDS))
@@ -299,6 +300,9 @@ public class MasterFragment extends Fragment {
             case "partly-cloudy-night":
                 weatherIcon.setAnimation("partlyCloudyNight.json");
                 break;
+
+            case "snow":
+                weatherIcon.setAnimation("snow.json");
 
             default:
                 weatherIcon.setAnimation("heavyThunderstorm.json");

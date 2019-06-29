@@ -10,6 +10,7 @@ import com.jggdevelopment.simpleweather.BuildConfig;
 import com.jggdevelopment.simpleweather.fragments.MasterFragment;
 import com.jggdevelopment.simpleweather.models.Forecast;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
