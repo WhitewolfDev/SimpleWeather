@@ -78,6 +78,8 @@ public class MasterFragment extends Fragment {
     private TextView precipitationChance;
     private ImageView precipImage;
     private LottieAnimationView weatherIcon;
+    private ImageView windIcon;
+    private TextView windSpeed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -159,6 +161,8 @@ public class MasterFragment extends Fragment {
         precipitationChance = view.findViewById(R.id.precipitation_chance);
         precipImage = view.findViewById(R.id.precipImage);
         weatherIcon = view.findViewById(R.id.weatherIcon);
+        windIcon = view.findViewById(R.id.wind_icon);
+        windSpeed = view.findViewById(R.id.wind_speed);
 
     }
 
@@ -248,6 +252,10 @@ public class MasterFragment extends Fragment {
         WeatherAPIUtils.getCurrentWeatherData(lat, lon, this);
     }
 
+    public boolean usingCelsius() {
+        return prefs.getBoolean("useCelsius", true);
+    }
+
     /**
      * updates views based on retrieved data
      * @param weatherData data retrieved from API call
@@ -262,6 +270,11 @@ public class MasterFragment extends Fragment {
         lowTemp.setText(getActivity().getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMin())));
         description.setText(weatherData.getCurrently().getSummary());
         precipitationChance.setText(getActivity().getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.getHourly().getData().get(0).getPrecipProbability() * 100)));
+        if (usingCelsius()) {
+            windSpeed.setText(getActivity().getString(R.string.formattedWindSpeedC, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getWindSpeed())));
+        } else {
+            windSpeed.setText(getActivity().getString(R.string.formattedWindSpeedF, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getWindSpeed())));
+        }
 
         temperatureView.startAnimation(in);
         highTemp.startAnimation(in);
@@ -271,6 +284,9 @@ public class MasterFragment extends Fragment {
         precipImage.setVisibility(View.VISIBLE);
         precipImage.startAnimation(in);
         weatherIcon.startAnimation(in);
+        windIcon.setVisibility(View.VISIBLE);
+        windIcon.startAnimation(in);
+        windSpeed.startAnimation(in);
 
         setIconAnimation(weatherData);
     }

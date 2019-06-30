@@ -111,6 +111,24 @@
                         android:layout_marginStart="4dp"
                         android:textColor="@android:color/white"/>
 
+                    <ImageView
+                        android:id="@+id/wind_icon"
+                        android:visibility="invisible"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_windicon"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"/>
+
+                    <TextView
+                        android:id="@+id/wind_speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginStart="4dp"
+                        android:textColor="@android:color/white"/>
+
                 </LinearLayout>
 
             </RelativeLayout>
