@@ -303,6 +303,18 @@ public class MasterFragment extends Fragment {
 
             case "snow":
                 weatherIcon.setAnimation("snow.json");
+                break;
+
+            case "sleet":
+                weatherIcon.setAnimation("sleet.json");
+                break;
+
+            case "wind":
+                weatherIcon.setAnimation("wind.json");
+                break;
+
+            case "fog":
+                weatherIcon.setAnimation("fog.json");
 
             default:
                 weatherIcon.setAnimation("heavyThunderstorm.json");
