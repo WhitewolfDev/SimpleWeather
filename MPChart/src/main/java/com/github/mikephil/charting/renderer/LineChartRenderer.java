@@ -539,7 +539,7 @@ public class LineChartRenderer extends LineRadarRenderer {
                 Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
 
                 // make sure the values do not interfear with the circles
-                int valOffset = (int) (dataSet.getCircleRadius() * 10f);
+                int valOffset = (int) (dataSet.getCircleRadius() * 1.75f);
 
                 if (!dataSet.isDrawCirclesEnabled())
                     valOffset = valOffset / 2;

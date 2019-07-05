@@ -75,7 +75,10 @@ public class NowWeatherFragment extends Fragment {
 
         LineDataSet lineDataSet = new LineDataSet(data, "");
         lineDataSet.setLineWidth(3f);
-        lineDataSet.setDrawCircles(false);
+        lineDataSet.setDrawCircles(true);
+        lineDataSet.setCircleColor(Color.TRANSPARENT);
+        lineDataSet.setCircleRadius(15);
+        lineDataSet.setCircleHoleColor(getResources().getColor(R.color.colorPrimary));
         lineDataSet.setColor(getResources().getColor(R.color.colorPrimary));
         lineDataSet.setValueTextSize(16f);
 
