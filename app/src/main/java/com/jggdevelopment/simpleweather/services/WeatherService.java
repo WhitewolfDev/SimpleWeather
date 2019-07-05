@@ -12,5 +12,5 @@ public interface WeatherService {
     Call<Forecast> getWeatherImperial(@Path("latitude") Double lat, @Path("longitude") Double lon);
 
     @GET("{latitude},{longitude}")
-    Call<Forecast> getWeatherSI(@Path("latitude") Double lat, @Path("longitude") Double lon, @Query("units") String units);
+    Call<Forecast> getWeatherMetric(@Path("latitude") Double lat, @Path("longitude") Double lon, @Query("units") String units);
 }

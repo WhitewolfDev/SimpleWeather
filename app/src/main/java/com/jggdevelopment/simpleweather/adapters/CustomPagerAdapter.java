@@ -41,11 +41,11 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return context.getString(R.string.now);
+                return context.getString(R.string.today);
             case 1:
-                return context.getString(R.string.hourly);
+                return context.getString(R.string.tomorrow);
             case 2:
-                return context.getString(R.string.daily);
+                return context.getString(R.string.week);
             default:
                 return null;
         }

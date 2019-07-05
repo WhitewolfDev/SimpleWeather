@@ -16,7 +16,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -28,15 +27,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.jggdevelopment.simpleweather.BuildConfig;
 import com.jggdevelopment.simpleweather.MainActivity;
 import com.jggdevelopment.simpleweather.R;
@@ -50,7 +47,6 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,6 +76,7 @@ public class MasterFragment extends Fragment {
     private LottieAnimationView weatherIcon;
     private ImageView windIcon;
     private TextView windSpeed;
+    private TextView apparentTemperature;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -163,6 +160,7 @@ public class MasterFragment extends Fragment {
         weatherIcon = view.findViewById(R.id.weatherIcon);
         windIcon = view.findViewById(R.id.wind_icon);
         windSpeed = view.findViewById(R.id.wind_speed);
+        apparentTemperature = view.findViewById(R.id.apparentTemperature);
 
     }
 
@@ -256,11 +254,14 @@ public class MasterFragment extends Fragment {
         return prefs.getBoolean("useCelsius", true);
     }
 
+
     /**
      * updates views based on retrieved data
      * @param weatherData data retrieved from API call
      */
     public void updateConditions(Forecast weatherData) {
+        prefs.edit().putString("weatherData", new Gson().toJson(weatherData)).commit();
+
         AlphaAnimation in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1500);
 
@@ -270,11 +271,13 @@ public class MasterFragment extends Fragment {
         lowTemp.setText(getActivity().getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getDaily().getData().get(0).getTemperatureMin())));
         description.setText(weatherData.getCurrently().getSummary());
         precipitationChance.setText(getActivity().getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.getHourly().getData().get(0).getPrecipProbability() * 100)));
+        apparentTemperature.setText(getActivity().getString(R.string.formattedApparentTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getApparentTemperature())));
         if (usingCelsius()) {
             windSpeed.setText(getActivity().getString(R.string.formattedWindSpeedC, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getWindSpeed())));
         } else {
             windSpeed.setText(getActivity().getString(R.string.formattedWindSpeedF, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getWindSpeed())));
         }
+
 
         temperatureView.startAnimation(in);
         highTemp.startAnimation(in);
@@ -287,6 +290,7 @@ public class MasterFragment extends Fragment {
         windIcon.setVisibility(View.VISIBLE);
         windIcon.startAnimation(in);
         windSpeed.startAnimation(in);
+        apparentTemperature.startAnimation(in);
 
         setIconAnimation(weatherData);
     }
@@ -369,7 +373,5 @@ public class MasterFragment extends Fragment {
         }
 
         ((MainActivity)activity).getSupportActionBar().setTitle(title);
-
-
     }
 }

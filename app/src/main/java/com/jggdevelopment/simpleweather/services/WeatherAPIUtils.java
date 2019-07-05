@@ -4,13 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.TextView;
 
-import androidx.preference.PreferenceManager;
-
 import com.jggdevelopment.simpleweather.BuildConfig;
 import com.jggdevelopment.simpleweather.fragments.MasterFragment;
 import com.jggdevelopment.simpleweather.models.Forecast;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -73,7 +70,7 @@ public class WeatherAPIUtils {
         prefs = fragment.getActivity().getSharedPreferences("com.jggdevelopment.simpleweather", Context.MODE_PRIVATE);
 
         if (prefs.getBoolean("useCelsius", false)) {
-            service.getWeatherSI(lat, lon, "si").enqueue(new Callback<Forecast>() {
+            service.getWeatherMetric(lat, lon, "ca").enqueue(new Callback<Forecast>() {
                 @Override
                 public void onResponse(Call<Forecast> call, Response<Forecast> response) {
                     if (response.isSuccessful()) {
