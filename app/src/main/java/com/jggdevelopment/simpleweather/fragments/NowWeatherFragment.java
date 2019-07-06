@@ -77,10 +77,23 @@ public class NowWeatherFragment extends Fragment {
         lineDataSet.setLineWidth(3f);
         lineDataSet.setDrawCircles(true);
         lineDataSet.setCircleColor(Color.TRANSPARENT);
-        lineDataSet.setCircleRadius(15);
-        lineDataSet.setCircleHoleColor(getResources().getColor(R.color.colorPrimary));
-        lineDataSet.setColor(getResources().getColor(R.color.colorPrimary));
-        lineDataSet.setValueTextSize(16f);
+        lineDataSet.setCircleRadius(10);
+        lineDataSet.setCircleHoleColor(getResources().getColor(R.color.colorAccent));
+        lineDataSet.setColor(getResources().getColor(R.color.colorAccent));
+        lineDataSet.setValueTextSize(14f);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFillDrawable(getResources().getDrawable(R.drawable.chart_gradient));
+
+        lineDataSet.setValueTextColor(getResources().getColor(R.color.greyText));
+        lineDataSet.setValueFormatter(new ValueFormatter() {
+
+            @Override
+            public String getFormattedValue(float value) {
+
+                int formattedValue = (int) value;
+                return Integer.toString(formattedValue);
+            }
+        });
 
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
