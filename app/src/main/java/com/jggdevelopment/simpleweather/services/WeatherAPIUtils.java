@@ -88,7 +88,9 @@ public class WeatherAPIUtils {
                 @Override
                 public void onResponse(Call<Forecast> call, Response<Forecast> response) {
                     if (response.isSuccessful()) {
-                        fragment.updateConditions(response.body());
+                        if (fragment.isAdded()) {
+                            fragment.updateConditions(response.body());
+                        }
                     }
                 }
 

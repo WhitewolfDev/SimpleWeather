@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class NowWeatherFragment extends Fragment {
@@ -70,7 +71,7 @@ public class NowWeatherFragment extends Fragment {
         List<HourDatum> hours = weatherData.getHourly().getData();
         List<Entry> data = new ArrayList<>();
         for (int i = 0; i < 24; i++) {
-            data.add(new Entry((float) i, Math.round(hours.get(i).getTemperature().floatValue())));
+            data.add(new Entry((float) hours.get(i).getTime(), Math.round(hours.get(i).getTemperature().floatValue())));
         }
 
         LineDataSet lineDataSet = new LineDataSet(data, "");
@@ -122,13 +123,16 @@ public class NowWeatherFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new ValueFormatter() {
 
-            private final SimpleDateFormat mFormat = new SimpleDateFormat("h a", Locale.getDefault());
-
             @Override
             public String getFormattedValue(float value) {
 
-                long millis = TimeUnit.HOURS.toMillis((long) value);
-                return mFormat.format(new Date(millis));
+                Date date = new Date((int) value * 1000L);
+                // format of the date
+                SimpleDateFormat jdf = new SimpleDateFormat("h a", Locale.getDefault());
+                jdf.setTimeZone(TimeZone.getTimeZone(weatherData.getTimezone()));
+                String formattedDate = jdf.format(date);
+
+                return formattedDate;
             }
         });
 

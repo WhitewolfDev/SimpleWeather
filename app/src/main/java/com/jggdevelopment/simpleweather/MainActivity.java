@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // This is a mostly blank activity, so MasterFragment needs to be pushed onto the content_frame
-        pushToFragmentManager(getSupportFragmentManager(), R.id.content_frame, new MasterFragment(), false);
+        MasterFragment master = new MasterFragment();
+        pushToFragmentManager(getSupportFragmentManager(), R.id.content_frame, master, false);
     }
 
 
