@@ -97,6 +97,7 @@
                     android:textColor="@android:color/white"/>
 
                 <LinearLayout
+                    android:id="@+id/environmentalFactors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -140,6 +141,16 @@
                         android:textColor="@android:color/white"/>
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:id="@+id/currentTime"
+                    android:textColor="@android:color/white"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_below="@id/environmentalFactors"/>
 
             </RelativeLayout>
 

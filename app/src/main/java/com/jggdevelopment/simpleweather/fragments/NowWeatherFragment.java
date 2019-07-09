@@ -84,6 +84,7 @@ public class NowWeatherFragment extends Fragment {
         lineDataSet.setValueTextSize(14f);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillDrawable(getResources().getDrawable(R.drawable.chart_gradient));
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         lineDataSet.setValueTextColor(getResources().getColor(R.color.greyText));
         lineDataSet.setValueFormatter(new ValueFormatter() {
@@ -102,7 +103,7 @@ public class NowWeatherFragment extends Fragment {
         lineChart.setDrawGridBackground(false);
         lineChart.getDescription().setEnabled(false);
         lineChart.setBackgroundColor(Color.TRANSPARENT);
-        lineChart.setMinimumWidth(3000);
+        lineChart.setMinimumWidth(4000);
         lineChart.setMinimumHeight(800);
         lineChart.setDragEnabled(false);
         lineChart.setHighlightPerDragEnabled(false);
@@ -119,7 +120,7 @@ public class NowWeatherFragment extends Fragment {
         xAxis.setCenterAxisLabels(false);
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(2f);
-        xAxis.setLabelCount(data.size());
+        xAxis.setLabelCount(23, true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new ValueFormatter() {
 

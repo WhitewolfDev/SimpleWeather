@@ -47,8 +47,11 @@ import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
@@ -77,6 +80,7 @@ public class MasterFragment extends Fragment {
     private ImageView windIcon;
     private TextView windSpeed;
     private TextView apparentTemperature;
+    private TextView currentTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -161,6 +165,7 @@ public class MasterFragment extends Fragment {
         windIcon = view.findViewById(R.id.wind_icon);
         windSpeed = view.findViewById(R.id.wind_speed);
         apparentTemperature = view.findViewById(R.id.apparentTemperature);
+        currentTime = view.findViewById(R.id.currentTime);
 
     }
 
@@ -276,6 +281,7 @@ public class MasterFragment extends Fragment {
         } else {
             windSpeed.setText(getActivity().getString(R.string.formattedWindSpeedF, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getWindSpeed())));
         }
+        currentTime.setText(getActivity().getString(R.string.formattedTime, String.format(Locale.getDefault(), "%s", convertUnixTimeToHours(weatherData.getCurrently().getTime(), weatherData.getTimezone()))));
 
 
         temperatureView.startAnimation(in);
@@ -290,8 +296,19 @@ public class MasterFragment extends Fragment {
         windIcon.startAnimation(in);
         windSpeed.startAnimation(in);
         apparentTemperature.startAnimation(in);
+        currentTime.startAnimation(in);
 
         setIconAnimation(weatherData);
+    }
+
+    public String convertUnixTimeToHours(int time, String timezone) {
+        Date date = new Date((int) time * 1000L);
+        // format of the date
+        SimpleDateFormat jdf = new SimpleDateFormat("h:mm a", Locale.getDefault());
+        jdf.setTimeZone(TimeZone.getTimeZone(timezone));
+        String formattedDate = jdf.format(date);
+
+        return formattedDate;
     }
 
     public void setIconAnimation(Forecast weatherData) {

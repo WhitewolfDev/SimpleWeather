@@ -20,6 +20,7 @@
     <string name="formattedPrecipitationChance">%1$s%%</string>
     <string name="formattedWindSpeedF">%1$s mph</string>
     <string name="formattedWindSpeedC">%1$s kph</string>
+    <string name="formattedTime">Last updated at %1$s</string>
 
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer closed</string>
