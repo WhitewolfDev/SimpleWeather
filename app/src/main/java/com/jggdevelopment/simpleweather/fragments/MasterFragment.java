@@ -205,7 +205,6 @@ public class MasterFragment extends Fragment {
                     .placeOptions(PlaceOptions.builder()
                             .language(Locale.getDefault().getLanguage())
                             .backgroundColor(Color.parseColor("#EEEEEE"))
-                            .limit(10)
                             .build(PlaceOptions.MODE_CARDS))
                     .build(getActivity());
             startActivityForResult(intent, 1);
@@ -373,5 +372,11 @@ public class MasterFragment extends Fragment {
         }
 
         ((MainActivity)activity).getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        prefs.unregisterOnSharedPreferenceChangeListener(listener);
     }
 }

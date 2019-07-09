@@ -157,4 +157,10 @@ public class NowWeatherFragment extends Fragment {
 
         prefs.registerOnSharedPreferenceChangeListener(listener);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+    }
 }
