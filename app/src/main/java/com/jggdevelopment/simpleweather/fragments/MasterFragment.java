@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.jggdevelopment.simpleweather.BuildConfig;
@@ -60,7 +62,7 @@ import static android.app.Activity.RESULT_OK;
  * This fragment shows the user the conditions of their current location by default
  * or their selected location, if they searched for one.
  */
-public class MasterFragment extends Fragment {
+public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener {
 
     private View view;
     private LocationManager locationManager;
@@ -81,6 +83,8 @@ public class MasterFragment extends Fragment {
     private TextView windSpeed;
     private TextView apparentTemperature;
     private TextView currentTime;
+    private AppBarLayout appBarLayout;
+    private SwipeRefreshLayout pullToRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,8 +134,23 @@ public class MasterFragment extends Fragment {
         drawerToggle.syncState();
 
         setHasOptionsMenu(true);
+
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (!prefs.getBoolean("locationPermissionAllowed", false)) {
+                    initializeWeatherData(Double.parseDouble(prefs.getString("defaultLatitude", "0")), Double.parseDouble(prefs.getString("defaultLongitude", "0")));
+                } else {
+                    initializeWeatherData();
+                }
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
         return view;
     }
+
+
 
     private void setupViews() {
         toolbar = view.findViewById(R.id.toolbar);
@@ -154,6 +173,9 @@ public class MasterFragment extends Fragment {
                 requestPermissions(new String[] {ACCESS_FINE_LOCATION}, 200);
             }
         });
+        appBarLayout = view.findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(this);
+        pullToRefresh = view.findViewById(R.id.pullToRefresh);
 
         temperatureView = view.findViewById(R.id.temperature);
         highTemp = view.findViewById(R.id.high_temp);
@@ -395,5 +417,26 @@ public class MasterFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         prefs.unregisterOnSharedPreferenceChangeListener(listener);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            pullToRefresh.setEnabled(true);
+        } else {
+            pullToRefresh.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        appBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        appBarLayout.removeOnOffsetChangedListener(this);
     }
 }

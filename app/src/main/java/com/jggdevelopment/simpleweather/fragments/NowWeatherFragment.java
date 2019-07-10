@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -66,7 +67,15 @@ public class NowWeatherFragment extends Fragment {
     }
 
     public void setupViews() {
+        AlphaAnimation in = new AlphaAnimation(0.0f, 1.0f);
+        in.setDuration(1500);
+
         lineChart = v.findViewById(R.id.tempChart);
+
+        if (weatherData != null) {
+            lineChart.setAnimation(in);
+            lineChart.setVisibility(View.VISIBLE);
+        }
 
         List<HourDatum> hours = weatherData.getHourly().getData();
         List<Entry> data = new ArrayList<>();
@@ -86,7 +95,7 @@ public class NowWeatherFragment extends Fragment {
         lineDataSet.setFillDrawable(getResources().getDrawable(R.drawable.chart_gradient));
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-        lineDataSet.setValueTextColor(getResources().getColor(R.color.greyText));
+        lineDataSet.setValueTextColor(Color.WHITE);
         lineDataSet.setValueFormatter(new ValueFormatter() {
 
             @Override
@@ -116,7 +125,7 @@ public class NowWeatherFragment extends Fragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(false);
-        xAxis.setTextColor(Color.BLACK);
+        xAxis.setTextColor(Color.WHITE);
         xAxis.setCenterAxisLabels(false);
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(2f);
