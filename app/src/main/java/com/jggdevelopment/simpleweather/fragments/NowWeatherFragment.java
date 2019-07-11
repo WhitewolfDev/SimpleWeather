@@ -88,8 +88,8 @@ public class NowWeatherFragment extends Fragment {
         lineDataSet.setDrawCircles(true);
         lineDataSet.setCircleColor(Color.TRANSPARENT);
         lineDataSet.setCircleRadius(10);
-        lineDataSet.setCircleHoleColor(getResources().getColor(R.color.colorAccent));
-        lineDataSet.setColor(getResources().getColor(R.color.colorAccent));
+        lineDataSet.setCircleHoleColor(Color.WHITE);
+        lineDataSet.setColor(Color.WHITE);
         lineDataSet.setValueTextSize(14f);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillDrawable(getResources().getDrawable(R.drawable.chart_gradient));
@@ -121,6 +121,7 @@ public class NowWeatherFragment extends Fragment {
         lineChart.setPinchZoom(false);
         lineChart.getAxisRight().setDrawAxisLine(false);
         lineChart.getAxisRight().setDrawGridLines(false);
+        lineChart.getAxisRight().setDrawLabels(false);
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setDrawAxisLine(false);
