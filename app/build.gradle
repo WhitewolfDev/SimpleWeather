@@ -12,6 +12,16 @@ android {
         versionName "0.04"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -50,6 +60,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.robinhood.spark:spark:1.2.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.AdityaAnand1:Morphing-Material-Dialogs:0.0.3'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
 
     testImplementation 'junit:junit:4.13-beta-3'

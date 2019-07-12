@@ -11,6 +11,19 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".MainActivity">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/weatherAlertFAB"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="12dp"
+            app:layout_collapseMode="pin"
+            android:src="@drawable/ic_warning"
+            android:background="@android:color/white"
+            android:backgroundTint="@android:color/white" />
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"

@@ -1,16 +1,14 @@
 package com.jggdevelopment.simpleweather.fragments;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -34,6 +32,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.jggdevelopment.simpleweather.BuildConfig;
@@ -54,6 +53,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import in.adityaanand.morphdialog.MorphDialog;
+import in.adityaanand.morphdialog.utils.MorphDialogAction;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
@@ -85,6 +87,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
     private TextView currentTime;
     private AppBarLayout appBarLayout;
     private SwipeRefreshLayout pullToRefresh;
+    private FloatingActionButton alertFab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -188,6 +191,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
         windSpeed = view.findViewById(R.id.wind_speed);
         apparentTemperature = view.findViewById(R.id.apparentTemperature);
         currentTime = view.findViewById(R.id.currentTime);
+        alertFab = view.findViewById(R.id.weatherAlertFAB);
 
     }
 
@@ -304,6 +308,17 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
             windSpeed.setText(getActivity().getString(R.string.formattedWindSpeedF, String.format(Locale.getDefault(), "%.0f", weatherData.getCurrently().getWindSpeed())));
         }
         currentTime.setText(getActivity().getString(R.string.formattedTime, String.format(Locale.getDefault(), "%s", convertUnixTimeToHours(weatherData.getCurrently().getTime(), weatherData.getTimezone()))));
+        if (weatherData.getAlerts() != null) {
+            alertFab.setVisibility(View.VISIBLE);
+            alertFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fabMorph(weatherData);
+                }
+            });
+        } else {
+            alertFab.setVisibility(View.GONE);
+        }
 
 
         temperatureView.startAnimation(in);
@@ -321,6 +336,18 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
         currentTime.startAnimation(in);
 
         setIconAnimation(weatherData);
+    }
+
+    private void fabMorph(Forecast weatherData) {
+        new MorphDialog.Builder(getActivity(), alertFab)
+                .title(weatherData.getAlerts().get(0).getTitle())
+                .content(weatherData.getAlerts().get(0).getDescription())
+                .positiveText("OK")
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
+                .onPositive((MorphDialog dialog1, MorphDialogAction which) -> {
+                    Toast.makeText(getActivity(), "onPositive", Toast.LENGTH_SHORT).show();
+                })
+                .show();
     }
 
     public String convertUnixTimeToHours(int time, String timezone) {

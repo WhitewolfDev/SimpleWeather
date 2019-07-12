@@ -41,6 +41,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jggdevelopment.simpleweather.MainActivity" />
         </activity>
+        <activity
+            android:name="in.adityaanand.morphdialog.MorphDialogActivity"
+            android:theme="@style/MorphDialog.Custom.Light">
+        </activity>
     </application>
 
 </manifest>

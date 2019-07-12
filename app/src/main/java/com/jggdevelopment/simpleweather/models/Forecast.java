@@ -3,6 +3,8 @@ package com.jggdevelopment.simpleweather.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Forecast {
 
     @SerializedName("currently")
@@ -32,6 +34,9 @@ public class Forecast {
     @SerializedName("timezone")
     @Expose
     private String timezone;
+    @SerializedName("alerts")
+    @Expose
+    private List<AlertDatum> alerts = null;
 
     public Currently getCurrently() {
         return currently;
@@ -105,4 +110,11 @@ public class Forecast {
         this.timezone = timezone;
     }
 
+    public List<AlertDatum> getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(List<AlertDatum> alerts) {
+        this.alerts = alerts;
+    }
 }
