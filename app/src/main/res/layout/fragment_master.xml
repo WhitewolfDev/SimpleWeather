@@ -21,15 +21,14 @@
             android:layout_marginEnd="12dp"
             app:layout_collapseMode="pin"
             android:src="@drawable/ic_warning"
-            android:background="@android:color/white"
-            android:backgroundTint="@android:color/white" />
+            android:background="@android:color/holo_red_light"
+            android:backgroundTint="@android:color/holo_red_light" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -60,14 +59,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/high_temp"
-                                android:textColor="@android:color/white"
                                 android:textSize="16sp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/low_temp"
-                                android:textColor="@android:color/white"
                                 android:textSize="16sp"
                                 android:layout_marginStart="12dp"/>
                         </LinearLayout>
@@ -78,15 +75,13 @@
                             android:layout_height="wrap_content"
                             android:textSize="112sp"
                             android:layout_marginTop="12dp"
-                            android:fontFamily="@font/roboto_thin"
-                            android:textColor="@android:color/white"/>
+                            android:fontFamily="@font/roboto_thin"/>
 
                         <TextView
                             android:id="@+id/apparentTemperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
-                            android:textColor="@android:color/white"
                             android:layout_below="@id/temperature"/>
 
                     </RelativeLayout>
@@ -110,8 +105,7 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="60dp"
                         android:layout_centerVertical="true"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/white"/>
+                        android:textSize="16sp"/>
 
                     <LinearLayout
                         android:id="@+id/environmentalFactors"
@@ -128,7 +122,7 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/drop"
+                            android:src="?attr/dropIconDrawable"
                             android:layout_gravity="center"/>
 
                         <TextView
@@ -136,8 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
-                            android:layout_marginStart="4dp"
-                            android:textColor="@android:color/white"/>
+                            android:layout_marginStart="4dp"/>
 
                         <ImageView
                             android:id="@+id/wind_icon"
@@ -145,7 +138,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_windicon"
+                            android:src="?attr/windIconDrawable"
                             android:layout_gravity="center"
                             android:layout_marginStart="12dp"/>
 
@@ -154,8 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
-                            android:layout_marginStart="4dp"
-                            android:textColor="@android:color/white"/>
+                            android:layout_marginStart="4dp"/>
 
                     </LinearLayout>
 
@@ -164,7 +156,6 @@
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:id="@+id/currentTime"
-                        android:textColor="@android:color/white"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="12dp"
                         android:layout_below="@id/environmentalFactors"/>
@@ -178,15 +169,13 @@
                     android:layout_gravity="top"
                     android:layout_marginBottom="48dp"
                     app:layout_collapseMode="pin"
-                    android:background="@color/colorPrimary"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                    android:background="@color/colorPrimary">
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/locationStar"
-                        android:button="@drawable/star_button"
+                        android:button="?attr/starDrawable"
                         android:gravity="center_vertical"
                         android:layout_marginStart="16dp"/>
 
@@ -194,7 +183,7 @@
                         android:id="@+id/locationButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_my_location"
+                        android:src="?attr/myLocationDrawable"
                         android:layout_gravity="end"
                         android:layout_marginEnd="12dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
@@ -207,9 +196,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    app:tabIndicatorColor="@android:color/white"
-                    app:tabSelectedTextColor="@android:color/white"
-                    app:tabTextColor="@color/white_70"/>
+                    style="@style/TabLayoutLight"/>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>

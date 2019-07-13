@@ -1,6 +1,45 @@
 <resources>
 
-    <style name="AppTheme.NoActionBar">
+    <attr name="dropIconDrawable" format="reference"/>
+    <attr name="windIconDrawable" format="reference"/>
+    <attr name="chartColor" format="reference"/>
+    <attr name="chartFillDrawable" format="reference"/>
+    <attr name="searchIconDrawable" format="reference"/>
+    <attr name="myLocationDrawable" format="reference"/>
+    <attr name="starDrawable" format="reference"/>
+
+    <!-- Base application theme. -->
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+        <item name="android:textColorPrimary">@color/greyText</item>
+        <item name="tabStyle">@style/TabLayoutLight</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+
+        <item name="dropIconDrawable">@drawable/drop_dark</item>
+        <item name="windIconDrawable">@drawable/wind_dark</item>
+        <item name="chartFillDrawable">@drawable/chart_gradient_light</item>
+        <item name="chartColor">@color/greyText</item>
+        <item name="searchIconDrawable">@drawable/ic_search_light</item>
+        <item name="myLocationDrawable">@drawable/ic_my_location_light</item>
+        <item name="starDrawable">@drawable/star_button_light</item>
+    </style>
+
+    <style name="PreferencesLight" parent="LightTheme">
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorAccent">@color/accentBlue</item>
+    </style>
+
+    <style name="TabLayoutLight" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/greyText</item>
+        <item name="tabTextColor">@color/greyText</item>
+    </style>
+
+    <style name="LightTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

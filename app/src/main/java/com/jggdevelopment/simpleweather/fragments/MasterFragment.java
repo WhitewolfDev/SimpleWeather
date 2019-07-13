@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -167,6 +168,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
         // setup ViewPager and its adapter
         ViewPager viewPager = view.findViewById(R.id.main_viewpager);
         viewPager.setAdapter(new CustomPagerAdapter(getContext(), getActivity().getSupportFragmentManager()));
+        viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
 
         // setup TabLayout and connect it to the ViewPager
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.weather_tabs);
@@ -179,6 +181,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
                 requestPermissions(new String[] {ACCESS_FINE_LOCATION}, 200);
             }
         });
+
         appBarLayout = view.findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(this);
         pullToRefresh = view.findViewById(R.id.pullToRefresh);

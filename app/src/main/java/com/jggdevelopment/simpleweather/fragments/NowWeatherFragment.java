@@ -3,20 +3,20 @@ package com.jggdevelopment.simpleweather.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -25,22 +25,15 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.gson.Gson;
 import com.jggdevelopment.simpleweather.R;
-import com.jggdevelopment.simpleweather.adapters.SparkViewAdapter;
 import com.jggdevelopment.simpleweather.models.Forecast;
 import com.jggdevelopment.simpleweather.models.HourDatum;
-import com.jggdevelopment.simpleweather.models.Hourly;
-import com.robinhood.spark.SparkView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 public class NowWeatherFragment extends Fragment {
 
@@ -67,6 +60,14 @@ public class NowWeatherFragment extends Fragment {
     }
 
     public void setupViews() {
+        Resources.Theme theme = getActivity().getTheme();
+        TypedValue chartColorValue = new TypedValue();
+        TypedValue chartFillValue = new TypedValue();
+        theme.resolveAttribute(R.attr.chartColor, chartColorValue, true);
+        theme.resolveAttribute(R.attr.chartFillDrawable, chartFillValue, true);
+        int chartColor = getResources().getColor(chartColorValue.resourceId);
+        Drawable chartFillColor = getResources().getDrawable(chartFillValue.resourceId);
+
         AlphaAnimation in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1500);
 
@@ -88,14 +89,14 @@ public class NowWeatherFragment extends Fragment {
         lineDataSet.setDrawCircles(true);
         lineDataSet.setCircleColor(Color.TRANSPARENT);
         lineDataSet.setCircleRadius(10);
-        lineDataSet.setCircleHoleColor(Color.WHITE);
-        lineDataSet.setColor(Color.WHITE);
+        lineDataSet.setCircleHoleColor(chartColor);
+        lineDataSet.setColor(chartColor);
         lineDataSet.setValueTextSize(14f);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillDrawable(getResources().getDrawable(R.drawable.chart_gradient));
+        //lineDataSet.setDrawFilled(true);
+        //lineDataSet.setFillDrawable(chartFillColor);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-        lineDataSet.setValueTextColor(Color.WHITE);
+        lineDataSet.setValueTextColor(chartColor);
         lineDataSet.setValueFormatter(new ValueFormatter() {
 
             @Override
@@ -126,7 +127,7 @@ public class NowWeatherFragment extends Fragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawGridLines(false);
-        xAxis.setTextColor(Color.WHITE);
+        xAxis.setTextColor(chartColor);
         xAxis.setCenterAxisLabels(false);
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(2f);
