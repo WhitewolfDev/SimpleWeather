@@ -179,7 +179,16 @@
                     android:layout_marginBottom="48dp"
                     app:layout_collapseMode="pin"
                     android:background="@color/colorPrimary"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/locationStar"
+                        android:button="@drawable/star_button"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"/>
 
                     <ImageView
                         android:id="@+id/locationButton"

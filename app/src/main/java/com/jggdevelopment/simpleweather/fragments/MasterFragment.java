@@ -26,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +90,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
     private AppBarLayout appBarLayout;
     private SwipeRefreshLayout pullToRefresh;
     private FloatingActionButton alertFab;
+    private CheckBox favoriteCity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -192,6 +195,16 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
         apparentTemperature = view.findViewById(R.id.apparentTemperature);
         currentTime = view.findViewById(R.id.currentTime);
         alertFab = view.findViewById(R.id.weatherAlertFAB);
+        favoriteCity = view.findViewById(R.id.locationStar);
+
+        favoriteCity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    Toast.makeText(getActivity(), "City added to Favorites (not really)", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -310,6 +323,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
         currentTime.setText(getActivity().getString(R.string.formattedTime, String.format(Locale.getDefault(), "%s", convertUnixTimeToHours(weatherData.getCurrently().getTime(), weatherData.getTimezone()))));
         if (weatherData.getAlerts() != null) {
             alertFab.setVisibility(View.VISIBLE);
+            alertFab.startAnimation(in);
             alertFab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
