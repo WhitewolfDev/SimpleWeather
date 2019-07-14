@@ -11,17 +11,16 @@
     <!-- Base application theme. -->
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
         <item name="android:textColorPrimary">@color/greyText</item>
         <item name="tabStyle">@style/TabLayoutLight</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@android:color/white</item>
 
-        <item name="dropIconDrawable">@drawable/drop_dark</item>
-        <item name="windIconDrawable">@drawable/wind_dark</item>
+        <item name="dropIconDrawable">@drawable/drop_light</item>
+        <item name="windIconDrawable">@drawable/wind_light</item>
         <item name="chartFillDrawable">@drawable/chart_gradient_light</item>
         <item name="chartColor">@color/greyText</item>
         <item name="searchIconDrawable">@drawable/ic_search_light</item>
@@ -29,14 +28,43 @@
         <item name="starDrawable">@drawable/star_button_light</item>
     </style>
 
+    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="tabStyle">@style/TabLayoutDark</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="dropIconDrawable">@drawable/drop_dark</item>
+        <item name="windIconDrawable">@drawable/wind_dark</item>
+        <item name="chartFillDrawable">@drawable/chart_gradient_dark</item>
+        <item name="chartColor">@android:color/white</item>
+        <item name="searchIconDrawable">@drawable/ic_search_dark</item>
+        <item name="myLocationDrawable">@drawable/ic_my_location_dark</item>
+        <item name="starDrawable">@drawable/star_button_dark</item>
+    </style>
+
     <style name="PreferencesLight" parent="LightTheme">
         <item name="colorPrimary">@android:color/white</item>
+        <item name="colorAccent">@color/accentBlue</item>
+    </style>
+
+    <style name="PreferencesDark" parent="DarkTheme">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/accentBlue</item>
     </style>
 
     <style name="TabLayoutLight" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/greyText</item>
         <item name="tabTextColor">@color/greyText</item>
+    </style>
+
+    <style name="TabLayoutDark" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabTextColor">@android:color/white</item>
     </style>
 
     <style name="LightTheme.NoActionBar">

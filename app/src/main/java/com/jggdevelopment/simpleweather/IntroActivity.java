@@ -1,8 +1,6 @@
 package com.jggdevelopment.simpleweather;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,12 +12,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
@@ -74,6 +70,7 @@ public class IntroActivity extends AppCompatActivity {
         prefs.edit().putString("defaultLongitude", Double.toString(point.longitude())).commit();
         prefs.edit().putBoolean("locationPermissionAllowed", false).commit();
         prefs.edit().putBoolean("useCelsius", false).commit();
+        prefs.edit().putBoolean("useDarkTheme", false).commit();
         startActivity(mainActivity);
         setIntroShown();
         finish();
@@ -86,6 +83,7 @@ public class IntroActivity extends AppCompatActivity {
         prefs.edit().putBoolean("locationPermissionAllowed", true).commit();
         prefs.edit().putBoolean("useCurrentLocation", true).commit();
         prefs.edit().putBoolean("useCelsius", false).commit();
+        prefs.edit().putBoolean("useDarkTheme", false).commit();
 
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
@@ -149,7 +147,7 @@ public class IntroActivity extends AppCompatActivity {
         dialog.setOnShowListener( new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface arg0) {
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorPrimary));
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getColor(R.color.colorPrimaryLight));
                 dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getColor(R.color.greyText));
                 TextView textView = (TextView) dialog.findViewById(android.R.id.message);
                 textView.setTextSize(18);
@@ -161,6 +159,7 @@ public class IntroActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 CarmenFeature feature = PlaceAutocomplete.getPlace(data);

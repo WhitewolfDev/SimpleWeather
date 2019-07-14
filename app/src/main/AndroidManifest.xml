@@ -36,6 +36,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="SimpleWeather"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/PreferencesLight">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -43,8 +44,7 @@
         </activity>
         <activity
             android:name="in.adityaanand.morphdialog.MorphDialogActivity"
-            android:theme="@style/MorphDialog.Custom.Light">
-        </activity>
+            android:theme="@style/MorphDialog.Custom.Light"></activity>
     </application>
 
 </manifest>

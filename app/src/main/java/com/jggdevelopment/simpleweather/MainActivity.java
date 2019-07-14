@@ -1,6 +1,8 @@
 package com.jggdevelopment.simpleweather;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 
@@ -19,9 +21,17 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        prefs = getSharedPreferences("com.jggdevelopment.simpleweather", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("useDarkTheme", false)) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.LightTheme);
+        }
+
         super.onCreate(savedInstanceState);
 
         // Setup the content view

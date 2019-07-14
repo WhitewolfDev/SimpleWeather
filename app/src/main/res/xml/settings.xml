@@ -21,6 +21,11 @@
             android:summary="Change your default units to Celsius"
             android:title="Use Celsius" />
 
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="useDarkTheme"
+            android:summary="Toggle dark theme"
+            android:title="Use Dark Theme" />
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

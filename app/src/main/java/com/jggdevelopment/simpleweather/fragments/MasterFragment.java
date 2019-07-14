@@ -209,6 +209,9 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
             }
         });
 
+        if (prefs.getBoolean("useDarkTheme", false)) {
+
+        }
     }
 
     @Override
@@ -378,49 +381,96 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
     }
 
     public void setIconAnimation(Forecast weatherData) {
-        switch (weatherData.getCurrently().getIcon()) {
-            case "clear-day":
-                weatherIcon.setAnimation("sun.json");
-                break;
+        if (prefs.getBoolean("useDarkTheme", false)) {
+            switch (weatherData.getCurrently().getIcon()) {
+                case "clear-day":
+                    weatherIcon.setAnimation("sun.json");
+                    break;
 
-            case "clear-night":
-                weatherIcon.setAnimation("clearNight.json");
-                break;
+                case "clear-night":
+                    weatherIcon.setAnimation("clearNight.json");
+                    break;
 
-            case "rain":
-                weatherIcon.setAnimation("drizzle.json");
-                break;
+                case "rain":
+                    weatherIcon.setAnimation("drizzle.json");
+                    break;
 
-            case "cloudy":
-                weatherIcon.setAnimation("Overcast.json");
-                break;
+                case "cloudy":
+                    weatherIcon.setAnimation("Overcast.json");
+                    break;
 
-            case "partly-cloudy-day":
-                weatherIcon.setAnimation("partlyCloudy.json");
-                break;
+                case "partly-cloudy-day":
+                    weatherIcon.setAnimation("partlyCloudy.json");
+                    break;
 
-            case "partly-cloudy-night":
-                weatherIcon.setAnimation("partlyCloudyNight.json");
-                break;
+                case "partly-cloudy-night":
+                    weatherIcon.setAnimation("partlyCloudyNight.json");
+                    break;
 
-            case "snow":
-                weatherIcon.setAnimation("snow.json");
-                break;
+                case "snow":
+                    weatherIcon.setAnimation("snow.json");
+                    break;
 
-            case "sleet":
-                weatherIcon.setAnimation("sleet.json");
-                break;
+                case "sleet":
+                    weatherIcon.setAnimation("sleet.json");
+                    break;
 
-            case "wind":
-                weatherIcon.setAnimation("wind.json");
-                break;
+                case "wind":
+                    weatherIcon.setAnimation("wind.json");
+                    break;
 
-            case "fog":
-                weatherIcon.setAnimation("fog.json");
+                case "fog":
+                    weatherIcon.setAnimation("fog.json");
 
-            default:
-                weatherIcon.setAnimation("heavyThunderstorm.json");
-                break;
+                default:
+                    weatherIcon.setAnimation("heavyThunderstorm.json");
+                    break;
+            }
+        } else {
+            switch (weatherData.getCurrently().getIcon()) {
+                case "clear-day":
+                    weatherIcon.setAnimation("sun.json");
+                    break;
+
+                case "clear-night":
+                    weatherIcon.setAnimation("clearNightLightTheme.json");
+                    break;
+
+                case "rain":
+                    weatherIcon.setAnimation("drizzleLightTheme.json");
+                    break;
+
+                case "cloudy":
+                    weatherIcon.setAnimation("OvercastLightTheme.json");
+                    break;
+
+                case "partly-cloudy-day":
+                    weatherIcon.setAnimation("partlyCloudyLightTheme.json");
+                    break;
+
+                case "partly-cloudy-night":
+                    weatherIcon.setAnimation("partlyCloudyNightLightTheme.json");
+                    break;
+
+                case "snow":
+                    weatherIcon.setAnimation("snowLightTheme.json");
+                    break;
+
+                case "sleet":
+                    weatherIcon.setAnimation("sleetLightTheme.json");
+                    break;
+
+                case "wind":
+                    weatherIcon.setAnimation("windLightTheme.json");
+                    break;
+
+                case "fog":
+                    weatherIcon.setAnimation("fogLightTheme.json");
+
+                default:
+                    weatherIcon.setAnimation("heavyThunderstormLightTheme.json");
+                    break;
+            }
         }
 
         weatherIcon.playAnimation();

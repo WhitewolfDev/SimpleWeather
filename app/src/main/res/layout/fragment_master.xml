@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:fitsSystemWindows="true"
-                app:contentScrim="@color/colorPrimary"
+                app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:titleEnabled="false">
 
@@ -169,7 +169,7 @@
                     android:layout_gravity="top"
                     android:layout_marginBottom="48dp"
                     app:layout_collapseMode="pin"
-                    android:background="@color/colorPrimary">
+                    android:background="?attr/colorPrimary">
 
                     <CheckBox
                         android:layout_width="wrap_content"
