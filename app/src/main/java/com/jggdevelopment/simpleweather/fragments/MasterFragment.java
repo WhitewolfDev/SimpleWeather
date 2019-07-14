@@ -360,7 +360,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
                 .title(weatherData.getAlerts().get(0).getTitle())
                 .content(weatherData.getAlerts().get(0).getDescription())
                 .positiveText("OK")
-                .positiveColor(getResources().getColor(R.color.colorPrimary))
+                .positiveColor(getResources().getColor(R.color.colorAccent))
                 .onPositive((MorphDialog dialog1, MorphDialogAction which) -> {
                     Toast.makeText(getActivity(), "onPositive", Toast.LENGTH_SHORT).show();
                 })
