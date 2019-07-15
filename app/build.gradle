@@ -8,8 +8,8 @@ android {
         applicationId "com.jggdevelopment.simpleweather"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 9
-        versionName "0.04"
+        versionCode 11
+        versionName "0.06"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
