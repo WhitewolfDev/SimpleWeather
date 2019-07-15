@@ -492,7 +492,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
         }
 
         String title = "Weather";
-        if (addresses != null) {
+        if (addresses != null && addresses.size() > 0) {
             if (addresses.get(0).getLocality() != null) {
                 title = addresses.get(0).getLocality();
             } else if (addresses.get(0).getSubLocality() != null) {
