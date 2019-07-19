@@ -20,6 +20,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
+        app:itemIconTint="?attr/navigationIconColor"
         app:menu="@menu/activity_main_drawer"
         android:background="?attr/colorPrimary" />
 

@@ -1,7 +1,6 @@
 package com.jggdevelopment.simpleweather.fragments;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -230,7 +228,6 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
                         initializeWeatherData(Double.parseDouble(prefs.getString("defaultLatitude", "0")), Double.parseDouble(prefs.getString("defaultLongitude", "0")));
                     }
                 }
-
             }
         };
 
@@ -421,6 +418,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
 
                 case "fog":
                     weatherIcon.setAnimation("fog.json");
+                    break;
 
                 default:
                     weatherIcon.setAnimation("heavyThunderstorm.json");
@@ -466,6 +464,7 @@ public class MasterFragment extends Fragment implements AppBarLayout.OnOffsetCha
 
                 case "fog":
                     weatherIcon.setAnimation("fogLightTheme.json");
+                    break;
 
                 default:
                     weatherIcon.setAnimation("heavyThunderstormLightTheme.json");
