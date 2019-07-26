@@ -84,8 +84,8 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
     private lateinit var pullToRefresh: SwipeRefreshLayout
     private lateinit var alertFab: FloatingActionButton
     private lateinit var favoriteCity: CheckBox
-    private lateinit var tempChartLabel: TextView
-    private lateinit var precipChartLabel: TextView
+    private lateinit var loadingIcon: LottieAnimationView
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -166,6 +166,7 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         currentTime = v.findViewById(R.id.currentTime)
         alertFab = v.findViewById(R.id.weatherAlertFAB)
         favoriteCity = v.findViewById(R.id.locationStar)
+        loadingIcon = v.findViewById(R.id.loading_icon)
 
         favoriteCity.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
@@ -271,6 +272,8 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
      */
     fun updateConditions(weatherData: Forecast) {
         prefs.edit().putString("weatherData", Gson().toJson(weatherData)).apply()
+
+        loadingIcon.visibility = View.INVISIBLE
 
         val anim = AlphaAnimation(0.0f, 1.0f)
         anim.duration = 1500

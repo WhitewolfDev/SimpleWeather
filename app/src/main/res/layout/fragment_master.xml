@@ -11,6 +11,16 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".MainActivity">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:lottie_fileName="loadingIconDarkTheme.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center"/>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/weatherAlertFAB"
             android:visibility="gone"
