@@ -2,8 +2,8 @@
 
     <attr name="dropIconDrawable" format="reference"/>
     <attr name="windIconDrawable" format="reference"/>
-    <attr name="chartColor" format="reference"/>
-    <attr name="chartFillDrawable" format="reference"/>
+    <attr name="chartTempColor" format="reference"/>
+    <attr name="chartPrecipColor" format="reference"/>
     <attr name="searchIconDrawable" format="reference"/>
     <attr name="myLocationDrawable" format="reference"/>
     <attr name="starDrawable" format="reference"/>
@@ -16,15 +16,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
-        <item name="android:textColorPrimary">@color/greyText</item>
+        <item name="android:textColor">@color/greyText</item>
         <item name="tabStyle">@style/TabLayoutLight</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="navigationIconColor">@color/greyText</item>
 
         <item name="dropIconDrawable">@drawable/drop_light</item>
         <item name="windIconDrawable">@drawable/wind_light</item>
-        <item name="chartFillDrawable">@drawable/chart_gradient_light</item>
-        <item name="chartColor">@color/greyText</item>
+        <item name="chartTempColor">@color/greyText</item>
+        <item name="chartPrecipColor">@color/precipLightBlue</item>
         <item name="searchIconDrawable">@drawable/ic_search_light</item>
         <item name="myLocationDrawable">@drawable/ic_my_location_light</item>
         <item name="starDrawable">@drawable/star_button_light</item>
@@ -36,15 +36,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="tabStyle">@style/TabLayoutDark</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="navigationIconColor">@android:color/white</item>
 
         <item name="dropIconDrawable">@drawable/drop_dark</item>
         <item name="windIconDrawable">@drawable/wind_dark</item>
-        <item name="chartFillDrawable">@drawable/chart_gradient_dark</item>
-        <item name="chartColor">@android:color/white</item>
+        <item name="chartTempColor">@android:color/white</item>
+        <item name="chartPrecipColor">@color/precipLightBlue</item>
         <item name="searchIconDrawable">@drawable/ic_search_dark</item>
         <item name="myLocationDrawable">@drawable/ic_my_location_dark</item>
         <item name="starDrawable">@drawable/star_button_dark</item>

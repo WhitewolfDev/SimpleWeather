@@ -43,15 +43,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun setupPreferenceListeners() {
         useCurrentLocationPreference.setOnPreferenceChangeListener { preference, newValue ->
-            prefs.edit().putBoolean("useCurrentLocation", newValue as Boolean).commit()
+            prefs.edit().putBoolean("useCurrentLocation", newValue as Boolean).apply()
+            true
         }
 
         useCelsiusPreference.setOnPreferenceChangeListener { preference, newValue ->
-            prefs.edit().putBoolean("useCelsius", newValue as Boolean).commit()
+            prefs.edit().putBoolean("useCelsius", newValue as Boolean).apply()
+            true
         }
 
         useDarkThemePreference.setOnPreferenceChangeListener { preference, newValue ->
-            prefs.edit().putBoolean("useDarkTheme", newValue as Boolean).commit()
+            prefs.edit().putBoolean("useDarkTheme", newValue as Boolean).apply()
             activity!!.recreate()
             true
         }
