@@ -55,7 +55,6 @@ import `in`.adityaanand.morphdialog.MorphDialog
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Activity.RESULT_OK
 import android.util.TypedValue
-import kotlinx.android.synthetic.main.fragment_master.*
 
 /**
  * This fragment shows the user the conditions of their current location by default
@@ -74,8 +73,8 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
     private lateinit var highTemp: TextView
     private lateinit var lowTemp: TextView
     private lateinit var description: TextView
-    private lateinit var precipitationChance: TextView
-    private lateinit var precipImage: ImageView
+    private lateinit var humidity: TextView
+    private lateinit var humidityImage: ImageView
     private lateinit var weatherIcon: LottieAnimationView
     private lateinit var windIcon: ImageView
     private lateinit var windSpeed: TextView
@@ -158,8 +157,8 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         highTemp = v.findViewById(R.id.high_temp)
         lowTemp = v.findViewById(R.id.low_temp)
         description = v.findViewById(R.id.weatherDescription)
-        precipitationChance = v.findViewById(R.id.precipitation_chance)
-        precipImage = v.findViewById(R.id.precipImage)
+        humidity = v.findViewById(R.id.humidity)
+        humidityImage = v.findViewById(R.id.humidity_image)
         weatherIcon = v.findViewById(R.id.weatherIcon)
         windIcon = v.findViewById(R.id.wind_icon)
         windSpeed = v.findViewById(R.id.wind_speed)
@@ -216,6 +215,8 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
                     .placeOptions(PlaceOptions.builder()
                             .language(Locale.getDefault().language)
                             .backgroundColor(color)
+                            .statusbarColor(color)
+                            .toolbarColor(color)
                             .build(PlaceOptions.MODE_CARDS))
                     .build(activity)
             startActivityForResult(intent, 1)
@@ -279,7 +280,7 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         highTemp.text = activity!!.getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.daily.data[0].temperatureMax))
         lowTemp.text = activity!!.getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.daily.data[0].temperatureMin))
         description.text = weatherData.currently.summary
-        precipitationChance.text = activity!!.getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.hourly.data[0].precipProbability * 100))
+        humidity.text = activity!!.getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.hourly.data[0].humidity * 100))
         apparentTemperature.text = activity!!.getString(R.string.formattedApparentTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.currently.apparentTemperature))
         if (usingCelsius()) {
             windSpeed.text = activity!!.getString(R.string.formattedWindSpeedC, String.format(Locale.getDefault(), "%.0f", weatherData.currently.windSpeed))
@@ -300,9 +301,9 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         highTemp.startAnimation(anim)
         lowTemp.startAnimation(anim)
         description.startAnimation(anim)
-        precipitationChance.startAnimation(anim)
-        precipImage.visibility = View.VISIBLE
-        precipImage.startAnimation(anim)
+        humidity.startAnimation(anim)
+        humidityImage.visibility = View.VISIBLE
+        humidityImage.startAnimation(anim)
         weatherIcon.startAnimation(anim)
         windIcon.visibility = View.VISIBLE
         windIcon.startAnimation(anim)

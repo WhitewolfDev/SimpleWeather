@@ -117,16 +117,16 @@
                         android:layout_below="@id/weatherDescription">
 
                         <ImageView
-                            android:id="@+id/precipImage"
+                            android:id="@+id/humidity_image"
                             android:visibility="invisible"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:scaleType="fitXY"
-                            android:src="?attr/dropIconDrawable"
+                            android:src="?attr/humidityIconDrawable"
                             android:layout_gravity="center"/>
 
                         <TextView
-                            android:id="@+id/precipitation_chance"
+                            android:id="@+id/humidity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"

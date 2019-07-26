@@ -8,6 +8,7 @@
     <attr name="myLocationDrawable" format="reference"/>
     <attr name="starDrawable" format="reference"/>
     <attr name="navigationIconColor" format="reference"/>
+    <attr name="humidityIconDrawable" format="reference"/>
 
     <!-- Base application theme. -->
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -23,6 +24,7 @@
 
         <item name="dropIconDrawable">@drawable/drop_light</item>
         <item name="windIconDrawable">@drawable/wind_light</item>
+        <item name="humidityIconDrawable">@drawable/ic_humidity_light</item>
         <item name="chartTempColor">@color/greyText</item>
         <item name="chartPrecipColor">@color/precipLightBlue</item>
         <item name="searchIconDrawable">@drawable/ic_search_light</item>
@@ -43,6 +45,7 @@
 
         <item name="dropIconDrawable">@drawable/drop_dark</item>
         <item name="windIconDrawable">@drawable/wind_dark</item>
+        <item name="humidityIconDrawable">@drawable/ic_humidity_dark</item>
         <item name="chartTempColor">@android:color/white</item>
         <item name="chartPrecipColor">@color/precipLightBlue</item>
         <item name="searchIconDrawable">@drawable/ic_search_dark</item>
