@@ -44,11 +44,11 @@ public class WeatherLocation {
     }
 
     public double getLatitude() {
-        return this.latitude;
+        return latitude;
     }
 
     public double getLongitude() {
-        return this.longitude;
+        return longitude;
     }
 
     /**

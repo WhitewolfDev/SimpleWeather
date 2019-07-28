@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.core.view.GravityCompat
 
 import android.view.MenuItem
@@ -50,6 +51,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (id == R.id.nav_settings) {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+        } else if (id == R.id.send_feedback) {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.setType("text/email")
+            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("cameron@jggmetalshop.com"))
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Atom Weather Feedback")
+            startActivity(Intent.createChooser(intent, "Send Feedback:"))
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

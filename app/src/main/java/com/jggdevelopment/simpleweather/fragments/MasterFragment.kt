@@ -55,6 +55,7 @@ import `in`.adityaanand.morphdialog.MorphDialog
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Activity.RESULT_OK
 import android.util.TypedValue
+import com.crashlytics.android.Crashlytics
 
 /**
  * This fragment shows the user the conditions of their current location by default
