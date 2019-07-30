@@ -86,6 +86,7 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
     private lateinit var alertFab: FloatingActionButton
     private lateinit var favoriteCity: CheckBox
     private lateinit var loadingIcon: LottieAnimationView
+    private var weatherData: Forecast? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -120,11 +121,11 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         setHasOptionsMenu(true)
 
         pullToRefresh.setOnRefreshListener {
-            if (!prefs.getBoolean("locationPermissionAllowed", false)) {
-                initializeWeatherData(java.lang.Double.parseDouble(prefs.getString("defaultLatitude", "0") ?: "0"), java.lang.Double.parseDouble(prefs.getString("defaultLongitude", "0") ?: "0"))
-            } else {
-                initializeWeatherData()
+
+            if (weatherData != null) {
+                initializeWeatherData(weatherData!!.latitude, weatherData!!.longitude)
             }
+
             pullToRefresh.isRefreshing = false
         }
 
@@ -153,6 +154,7 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         appBarLayout = v.findViewById(R.id.appBarLayout)
         appBarLayout.addOnOffsetChangedListener(this)
         pullToRefresh = v.findViewById(R.id.pullToRefresh)
+        pullToRefresh.isEnabled = false
 
         temperatureView = v.findViewById(R.id.temperature)
         highTemp = v.findViewById(R.id.high_temp)
@@ -272,6 +274,9 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
      * @param weatherData data retrieved from API call
      */
     fun updateConditions(weatherData: Forecast) {
+        this.weatherData = weatherData
+        pullToRefresh.isEnabled = true
+
         prefs.edit().putString("weatherData", Gson().toJson(weatherData)).apply()
 
         loadingIcon.visibility = View.INVISIBLE
