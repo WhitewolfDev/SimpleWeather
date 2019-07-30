@@ -121,13 +121,11 @@ class MasterFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         setHasOptionsMenu(true)
 
         pullToRefresh.setOnRefreshListener {
-            if (!prefs.getBoolean("locationPermissionAllowed", false)) {
-                initializeWeatherData()
-            } else {
-                if (weatherData != null) {
-                    initializeWeatherData(weatherData!!.latitude, weatherData!!.longitude)
-                }
+
+            if (weatherData != null) {
+                initializeWeatherData(weatherData!!.latitude, weatherData!!.longitude)
             }
+
             pullToRefresh.isRefreshing = false
         }
 
