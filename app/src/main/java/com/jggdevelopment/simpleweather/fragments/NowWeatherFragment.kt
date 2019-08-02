@@ -242,7 +242,7 @@ class NowWeatherFragment : Fragment() {
         yAxis.setDrawAxisLine(false)
         yAxis.setDrawLabels(false)
         yAxis.axisMinimum = 0f
-        yAxis.axisMaximum = 110f
+        yAxis.axisMaximum = 100f
     }
 
     private fun setupPreferencesListener() {
