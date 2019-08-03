@@ -9,8 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import com.crashlytics.android.Crashlytics
-import kotlinx.android.synthetic.main.fragment_master.toolbar
+import kotlinx.android.synthetic.main.activity_main.*
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var mToolbar: Toolbar

@@ -6,12 +6,230 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    android:background="?attr/colorPrimary">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pullToRefresh"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".MainActivity">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loading_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:lottie_fileName="loadingIconDarkTheme.json"
+                app:lottie_loop="true"
+                app:lottie_speed="1"
+                app:lottie_autoPlay="true"
+                android:layout_gravity="center"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/weatherAlertFAB"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="12dp"
+                app:layout_collapseMode="pin"
+                android:src="@drawable/ic_warning"
+                android:background="@android:color/holo_red_light"
+                android:backgroundTint="@android:color/holo_red_light" />
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="500dp">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="?attr/actionBarSize"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:titleEnabled="false">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <RelativeLayout
+                            android:id="@+id/temperatureGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="100dp"
+                            android:layout_marginStart="24dp">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/high_temp"
+                                    android:textSize="16sp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/low_temp"
+                                    android:textSize="16sp"
+                                    android:layout_marginStart="12dp"/>
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/temperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="112sp"
+                                android:layout_marginTop="12dp"
+                                android:fontFamily="@font/roboto_thin"/>
+
+                            <TextView
+                                android:id="@+id/apparentTemperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_below="@id/temperature"/>
+
+                        </RelativeLayout>
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/weatherIcon"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginStart="48dp"
+                            android:layout_toEndOf="@id/temperatureGroup"
+                            android:layout_marginTop="135dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            app:lottie_speed="1" />
+
+                        <TextView
+                            android:id="@+id/weatherDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/temperatureGroup"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="60dp"
+                            android:layout_centerVertical="true"
+                            android:textSize="16sp"/>
+
+                        <LinearLayout
+                            android:id="@+id/environmentalFactors"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_below="@id/weatherDescription">
+
+                            <ImageView
+                                android:id="@+id/humidity_image"
+                                android:visibility="invisible"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:scaleType="fitXY"
+                                android:src="?attr/humidityIconDrawable"
+                                android:layout_gravity="center"/>
+
+                            <TextView
+                                android:id="@+id/humidity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_marginStart="4dp"/>
+
+                            <ImageView
+                                android:id="@+id/wind_icon"
+                                android:visibility="invisible"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:src="?attr/windIconDrawable"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="12dp"/>
+
+                            <TextView
+                                android:id="@+id/wind_speed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_marginStart="4dp"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:id="@+id/currentTime"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_below="@id/environmentalFactors"/>
+
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="top"
+                        android:minHeight="?attr/actionBarSize"
+                        android:layout_marginBottom="48dp"
+                        app:layout_collapseMode="pin"
+                        android:background="?attr/colorPrimary">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/locationStar"
+                            android:button="?attr/starDrawable"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="16dp"/>
+
+                        <ImageView
+                            android:id="@+id/locationButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="?attr/myLocationDrawable"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="12dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:clickable="true" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/weather_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+
+                        style="?attr/tabStyle"/>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/main_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
