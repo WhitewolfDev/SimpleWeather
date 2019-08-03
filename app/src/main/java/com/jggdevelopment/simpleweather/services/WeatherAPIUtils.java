@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.widget.TextView;
 
 import com.jggdevelopment.simpleweather.BuildConfig;
-import com.jggdevelopment.simpleweather.fragments.MasterFragment;
 import com.jggdevelopment.simpleweather.models.Forecast;
 
 import java.util.concurrent.TimeUnit;
@@ -61,44 +60,19 @@ public class WeatherAPIUtils {
     /**
      * Pulls weather data from the DarkSky API using the provided location.
      * On success, it updates the views in MasterFragment
+     * @param context used to access shared prefs
      * @param lat latitude of location
      * @param lon longitude of location
-     * @param fragment MasterFragment
+     *
      */
-    public static void getCurrentWeatherData(Double lat, Double lon, final MasterFragment fragment) {
+    public static void getCurrentWeatherData(Context context, Double lat, Double lon, final Callback<Forecast> callback) {
         WeatherService service = getWeatherService();
-        prefs = fragment.getActivity().getSharedPreferences("com.jggdevelopment.simpleweather", Context.MODE_PRIVATE);
+        prefs = context.getSharedPreferences("com.jggdevelopment.simpleweather", Context.MODE_PRIVATE);
 
         if (prefs.getBoolean("useCelsius", false)) {
-            service.getWeatherMetric(lat, lon, "ca").enqueue(new Callback<Forecast>() {
-                @Override
-                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-                    if (response.isSuccessful()) {
-                        fragment.updateConditions(response.body());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Forecast> call, Throwable t) {
-
-                }
-            });
+            service.getWeatherMetric(lat, lon, "ca").enqueue(callback);
         } else {
-            service.getWeatherImperial(lat, lon).enqueue(new Callback<Forecast>() {
-                @Override
-                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-                    if (response.isSuccessful()) {
-                        if (fragment.isAdded()) {
-                            fragment.updateConditions(response.body());
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Forecast> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+            service.getWeatherImperial(lat, lon).enqueue(callback);
         }
     }
 }
