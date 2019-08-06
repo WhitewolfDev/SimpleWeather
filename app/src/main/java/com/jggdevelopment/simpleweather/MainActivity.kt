@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         pullToRefresh.setOnRefreshListener {
 
             if (weatherData != null) {
-                initializeWeatherData(weatherData!!.latitude, weatherData!!.longitude)
+                initializeWeatherData(weatherData!!.latitude!!, weatherData!!.longitude!!)
             }
 
             pullToRefresh.isRefreshing = false
@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun setIconAnimation(weatherData: Forecast) {
         if (prefs.getBoolean("useDarkTheme", false)) {
-            when (weatherData.currently.icon) {
+            when (weatherData.currently!!.icon) {
                 "clear-day" -> weatherIcon.setAnimation("sun.json")
 
                 "clear-night" -> weatherIcon.setAnimation("clearNight.json")
@@ -249,7 +249,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 else -> weatherIcon.setAnimation("heavyThunderstorm.json")
             }
         } else {
-            when (weatherData.currently.icon) {
+            when (weatherData.currently!!.icon) {
                 "clear-day" -> weatherIcon.setAnimation("sun.json")
 
                 "clear-night" -> weatherIcon.setAnimation("clearNightLightTheme.json")
@@ -310,8 +310,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun fabMorph(weatherData: Forecast) {
         MorphDialog.Builder(this, alertFab)
-                .title(weatherData.alerts[0].title)
-                .content(weatherData.alerts[0].description)
+                .title(weatherData.alerts!![0].title!!)
+                .content(weatherData.alerts!![0].description!!)
                 .positiveText("OK")
                 .positiveColor(resources.getColor(R.color.colorAccent))
                 .show()
@@ -345,19 +345,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val anim = AlphaAnimation(0.0f, 1.0f)
         anim.duration = 1500
 
-        updateToolbar(this, weatherData.latitude, weatherData.longitude)
-        temperatureView.text = this.getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.currently.temperature))
-        highTemp.text = this.getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.daily.data[0].temperatureMax))
-        lowTemp.text = this.getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.daily.data[0].temperatureMin))
-        description.text = weatherData.currently.summary
-        humidity.text = this.getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.hourly.data[0].humidity * 100))
-        apparentTemperature.text = this.getString(R.string.formattedApparentTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.currently.apparentTemperature))
+        updateToolbar(this, weatherData.latitude!!, weatherData.longitude!!)
+        temperatureView.text = this.getString(R.string.formattedTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.currently!!.temperature))
+        highTemp.text = this.getString(R.string.formattedHighTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.daily!!.data!![0].temperatureMax))
+        lowTemp.text = this.getString(R.string.formattedLowTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.daily!!.data!![0].temperatureMin))
+        description.text = weatherData.currently!!.summary
+        humidity.text = this.getString(R.string.formattedPrecipitationChance, String.format(Locale.getDefault(), "%.0f", weatherData.hourly!!.data!![0].humidity * 100))
+        apparentTemperature.text = this.getString(R.string.formattedApparentTemperature, String.format(Locale.getDefault(), "%.0f", weatherData.currently!!.apparentTemperature))
         if (usingCelsius()) {
-            windSpeed.text = this.getString(R.string.formattedWindSpeedC, String.format(Locale.getDefault(), "%.0f", weatherData.currently.windSpeed))
+            windSpeed.text = this.getString(R.string.formattedWindSpeedC, String.format(Locale.getDefault(), "%.0f", weatherData.currently!!.windSpeed))
         } else {
-            windSpeed.text = this.getString(R.string.formattedWindSpeedF, String.format(Locale.getDefault(), "%.0f", weatherData.currently.windSpeed))
+            windSpeed.text = this.getString(R.string.formattedWindSpeedF, String.format(Locale.getDefault(), "%.0f", weatherData.currently!!.windSpeed))
         }
-        currentTime.text = this.getString(R.string.formattedTime, String.format(Locale.getDefault(), "%s", convertUnixTimeToHours(weatherData.currently.time, weatherData.timezone)))
+        currentTime.text = this.getString(R.string.formattedTime, String.format(Locale.getDefault(), "%s", convertUnixTimeToHours(weatherData.currently!!.time!!, weatherData.timezone!!)))
         if (weatherData.alerts != null) {
             alertFab.visibility = View.VISIBLE
             alertFab.startAnimation(anim)
