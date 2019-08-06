@@ -8,6 +8,6 @@ Please feel free to submit any bugs through Github Issues, as long as they don't
 
 Thanks for checking out the app!
 
-Light Mode                                      |  Light Mode w/ Precip Shown                      |  Dark Mode        | Alert Dialog
+Light Theme                                     |  Light Theme w/ Precip Shown                      |  Dark Theme      | Severe Weather Alerts
 :----------------------------------------------:|:------------------------------------------------:|:-----------------:|:----------:
 ![Screenshot](https://i.imgur.com/FHOP09e.png)  |  ![Screenshot](https://i.imgur.com/9SoJYEY.png)  | ![Screenshot](https://i.imgur.com/g7OmM7D.png) | ![Screenshot](https://i.imgur.com/oss6N99.png)
