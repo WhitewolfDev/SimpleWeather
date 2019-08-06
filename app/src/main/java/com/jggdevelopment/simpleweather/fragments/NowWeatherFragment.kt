@@ -89,10 +89,10 @@ class NowWeatherFragment : Fragment() {
         theme.resolveAttribute(R.attr.chartTempColor, chartColorValue, true)
         val chartColor = resources.getColor(chartColorValue.resourceId)
 
-        val hours = weatherData.hourly.data
+        val hours = weatherData.hourly!!.data
         val data = ArrayList<Entry>()
         for (i in 0..23) {
-            data.add(Entry(i.toFloat(), Math.round(hours[i].temperature).toFloat()))
+            data.add(Entry(i.toFloat(), Math.round(hours!![i].temperature!!).toFloat()))
         }
 
         val lineDataSet = LineDataSet(data, "")
@@ -148,7 +148,7 @@ class NowWeatherFragment : Fragment() {
 
             override fun getFormattedValue(value: Float): String {
 
-                val date = Date(hours[value.toInt()].time.toInt() * 1000L)
+                val date = Date(hours!![value.toInt()].time!!.toInt() * 1000L)
                 // format of the date
                 val jdf = SimpleDateFormat("h a", Locale.getDefault())
                 jdf.timeZone = TimeZone.getTimeZone(weatherData.timezone)
@@ -169,10 +169,10 @@ class NowWeatherFragment : Fragment() {
         theme.resolveAttribute(R.attr.chartPrecipColor, chartColorValue, true)
         val chartColor = resources.getColor(chartColorValue.resourceId)
 
-        val hours = weatherData.hourly.data
+        val hours = weatherData.hourly!!.data
         val data = ArrayList<Entry>()
         for (i in 0..23) {
-            data.add(Entry(i.toFloat(), Math.round(hours[i].precipProbability * 100).toFloat()))
+            data.add(Entry(i.toFloat(), Math.round(hours!![i].precipProbability * 100).toFloat()))
         }
 
         val lineDataSet = LineDataSet(data, "")
@@ -228,7 +228,7 @@ class NowWeatherFragment : Fragment() {
 
             override fun getFormattedValue(value: Float): String {
 
-                val date = Date(hours[value.toInt()].time.toInt() * 1000L)
+                val date = Date(hours!![value.toInt()].time!!.toInt() * 1000L)
                 // format of the date
                 val jdf = SimpleDateFormat("h a", Locale.getDefault())
                 jdf.timeZone = TimeZone.getTimeZone(weatherData.timezone)
