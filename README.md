@@ -1,6 +1,6 @@
 Simple Weather app for Android
 
-The app is currently under development and is almost guaranteed to be unstable and buggy.  We are working towards a launch in the fall.  In the meantime, it is being alpha tested through Google Play, and is heavily under development.
+The app is currently under development and is almost guaranteed to be unstable and buggy.  The master branch will be kept relatively clean, since it is the branch we release from, but until release, it will have bugs and crashes, particularly around edge cases, until we can do extensive testing on the full app when it is release-ready.  We are working towards a launch in the fall.  In the meantime, it is being alpha tested through Google Play, and is heavily under development.
 
 We are also currently in the process of switching the whole app from Java to Kotlin, which I am about halfway finished with.  That should be done shortly.
 
