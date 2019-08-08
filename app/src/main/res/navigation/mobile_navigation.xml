@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/mobile_navigation"
+    app:startDestination="@id/currentWeatherFragment">
+
+    <fragment
+        android:id="@+id/currentWeatherFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.weather.current.CurrentWeatherFragment"
+        android:label="CurrentWeatherFragment" />
+    <fragment
+        android:id="@+id/futureListWeatherFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.weather.future.list.FutureListWeatherFragment"
+        android:label="FutureListWeatherFragment" />
+    <fragment
+        android:id="@+id/futureDetailWeatherFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.weather.future.detail.FutureDetailWeatherFragment"
+        android:label="FutureDetailWeatherFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/tomorrowWeatherFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.weather.tomorrow.TomorrowWeatherFragment"
+        android:label="TomorrowWeatherFragment" />
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/tomorrowWeatherFragment" />
+</navigation>

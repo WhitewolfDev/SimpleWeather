@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jggdevelopment.simpleweather">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".ForecastApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,23 +16,25 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup">
-        <activity
-            android:name=".IntroActivity"
-            android:label="@string/title_activity_intro"
-            android:theme="@style/LightTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        tools:replace="android:allowBackup"
+        tools:ignore="GoogleAppIndexingWarning">
+<!--        <activity-->
+<!--            android:name=".IntroActivity"-->
+<!--            android:label="@string/title_activity_intro"-->
+<!--            android:theme="@style/LightTheme">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/LightTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
