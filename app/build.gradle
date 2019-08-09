@@ -43,12 +43,29 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha08'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+//    implementation 'com.google.android.material:material:1.1.0-alpha09'
+//    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+//    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+//    implementation 'com.airbnb.android:lottie:3.0.7'
+//    implementation 'com.google.android.libraries.places:places:2.0.0'
+//    implementation 'androidx.cardview:cardview:1.0.0'
+//    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-places-v8:0.9.0'
+//    implementation 'androidx.preference:preference:1.1.0-rc01'
+//    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+//    implementation 'com.github.AdityaAnand1:Morphing-Material-Dialogs:0.0.3'
+//    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+//    implementation "androidx.core:core-ktx:1.0.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.41"
+//    implementation 'com.google.firebase:firebase-core:17.0.1'
+//    implementation 'com.google.android.gms:play-services-location:17.0.0'
+//    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+//    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-beta02"
+//    implementation "androidx.navigation:navigation-ui-ktx:2.1.0-beta02"
+//    implementation 'androidx.fragment:fragment-ktx:1.2.0-alpha01'
+
     implementation 'com.airbnb.android:lottie:3.0.7'
     implementation 'com.google.android.libraries.places:places:2.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'

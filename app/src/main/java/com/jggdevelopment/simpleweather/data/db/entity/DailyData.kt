@@ -16,6 +16,8 @@ data class DailyData(
     val pressure: Double,
     val summary: String,
     val temperature: Double,
+    val temperatureHigh: Double,
+    val temperatureLow: Double,
     val time: Int,
     val uvIndex: Int,
     val visibility: Double,
