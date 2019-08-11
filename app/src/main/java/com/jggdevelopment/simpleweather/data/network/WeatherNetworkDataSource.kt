@@ -1,10 +1,10 @@
 package com.jggdevelopment.simpleweather.data.network
 
 import androidx.lifecycle.LiveData
-import com.jggdevelopment.simpleweather.data.network.response.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
 
 interface WeatherNetworkDataSource {
-    val downloadedCurrentWeather: LiveData<WeatherResponse>
+    val downloadedWeatherResponse: LiveData<WeatherResponse>
 
     suspend fun fetchCurrentWeather (
             latitude: Double,

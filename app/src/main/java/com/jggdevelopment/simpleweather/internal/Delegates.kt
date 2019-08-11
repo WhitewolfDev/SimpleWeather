@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 
 fun <T> lazyDeferred(block: suspend CoroutineScope.() -> T): Lazy<Deferred<T>> {
     return lazy {
-        GlobalScope.async(start = CoroutineStart.LAZY) {
+        GlobalScope.async {
             block.invoke(this)
         }
     }

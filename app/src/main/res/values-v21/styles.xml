@@ -11,7 +11,9 @@
     <attr name="humidityIconDrawable" format="reference"/>
 
     <!-- Base application theme. -->
-    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LightTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryLight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
@@ -32,7 +34,7 @@
         <item name="starDrawable">@drawable/star_button_light</item>
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="DarkTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
@@ -51,6 +53,14 @@
         <item name="searchIconDrawable">@drawable/ic_search_dark</item>
         <item name="myLocationDrawable">@drawable/ic_my_location_dark</item>
         <item name="starDrawable">@drawable/star_button_dark</item>
+    </style>
+    
+    <style name="ToolbarThemeLight" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@color/greyText</item>
+    </style>
+
+    <style name="ToolbarThemeDark" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
     <style name="PreferencesLight" parent="LightTheme">
