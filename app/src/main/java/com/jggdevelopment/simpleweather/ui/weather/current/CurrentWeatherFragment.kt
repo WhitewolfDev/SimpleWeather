@@ -54,22 +54,22 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware, SwipeRefreshLayout
     }
 
     override fun onRefresh() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(WeatherResponseViewModel::class.java)
-
         bindUI()
         pullToRefresh.isRefreshing = false
     }
 
     private fun bindUI() = launch {
-        val currentWeather = viewModel.weather.await()
-        currentWeather.observe(this@CurrentWeatherFragment, Observer {
+        viewModel.refreshWeather()
+        val currentWeather = viewModel.weather
+        val owner = viewLifecycleOwner
+
+        currentWeather.observe(owner, Observer {
             if (it == null) return@Observer
 
             loading_icon.visibility = View.GONE
 
-            updateLocation("Raleigh")
-            updateDateToToday()
+            updateLocation(it.getLocation().getLocationString(context!!.applicationContext))
+            updateLocalTime(it.currently.time, it.timezone)
             updateTemperatures(it.currently.temperature.roundToInt(),
                     it.currently.apparentTemperature.roundToInt(),
                     it.daily.data[0].temperatureMin.roundToInt(),
@@ -79,6 +79,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware, SwipeRefreshLayout
             updateWeatherIcon(it.currently.icon)
             updateTempChart(it)
             updatePrecipChart(it)
+            updateRefreshTime(it.currently.time, it.timezone)
         })
     }
 
@@ -90,8 +91,9 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware, SwipeRefreshLayout
         (activity as? AppCompatActivity)?.supportActionBar?.title = location
     }
 
-    private fun updateDateToToday() {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Today"
+    private fun updateLocalTime(time: Int, timezone: String) {
+        val localTime = viewModel.unixTimeToActualTime(time, timezone)
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Local time: $localTime"
     }
 
     private fun updateTemperatures(temperature: Int, apparentTemperature: Int, temperatureMin: Int, temperatureMax: Int) {
@@ -310,5 +312,15 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware, SwipeRefreshLayout
         precipLineChart.invalidate()
         precipLineChart.visibility = View.VISIBLE
         precip_chart_label.visibility = View.VISIBLE
+    }
+
+    fun updateRefreshTime(time: Int, timezone: String) {
+        val date = Date(time * 1000L)
+        // format of the date
+        val jdf = SimpleDateFormat("h:mm a", Locale.getDefault())
+        jdf.timeZone = TimeZone.getDefault()
+
+        val formattedDate = jdf.format(date)
+        currentTime.text = "Last updated at $formattedDate"
     }
 }

@@ -25,9 +25,9 @@ data class Currently(
         @ColumnInfo(name = "ozone")
         val ozone: Double,
         @ColumnInfo(name = "precipIntensity")
-        val precipIntensity: Int,
+        val precipIntensity: Double,
         @ColumnInfo(name = "precipProbability")
-        val precipProbability: Int,
+        val precipProbability: Double,
         @ColumnInfo(name = "pressure")
         val pressure: Double,
         @ColumnInfo(name = "summary")
@@ -35,7 +35,7 @@ data class Currently(
         @ColumnInfo(name = "temperature")
         val temperature: Double,
         @ColumnInfo(name = "time")
-        val time: Long,
+        val time: Int,
         @ColumnInfo(name = "uvIndex")
         val uvIndex: Int,
         @ColumnInfo(name = "visibility")

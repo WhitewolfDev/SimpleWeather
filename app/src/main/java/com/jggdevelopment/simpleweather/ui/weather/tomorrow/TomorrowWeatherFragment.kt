@@ -52,21 +52,23 @@ class TomorrowWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch {
-        val currentWeather = viewModel.weather.await()
+        viewModel.refreshWeather()
+        val currentWeather = viewModel.weather
         currentWeather.observe(this@TomorrowWeatherFragment, Observer {
             if (it == null) return@Observer
 
             loading_icon.visibility = View.GONE
 
-            updateLocation("Raleigh")
-            updateDateToToday()
+            updateLocation(it.getLocation().getLocationString(context!!.applicationContext))
+            updateLocalTime(it.currently.time, it.timezone)
             updateTemperatures(it.daily.data[0].temperatureMin.roundToInt(),
                     it.daily.data[0].temperatureMax.roundToInt())
-            updateDescription(it.currently.summary)
-            updateEnvironmentals((it.currently.humidity * 100).roundToInt(), it.currently.windSpeed.roundToInt())
-            updateWeatherIcon(it.currently.icon)
+            updateDescription(it.daily.data[0].summary)
+            updateEnvironmentals((it.daily.data[0].humidity * 100).roundToInt(), it.currently.windSpeed.roundToInt())
+            updateWeatherIcon(it.daily.data[0].icon)
             updateTempChart(it)
             updatePrecipChart(it)
+            updateRefreshTime(it.currently.time, it.timezone)
         })
     }
 
@@ -78,8 +80,9 @@ class TomorrowWeatherFragment : ScopedFragment(), KodeinAware {
         (activity as? AppCompatActivity)?.supportActionBar?.title = location
     }
 
-    private fun updateDateToToday() {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Tomorrow"
+    private fun updateLocalTime(time: Int, timezone: String) {
+        val localTime = viewModel.unixTimeToActualTime(time, timezone)
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Local time: $localTime"
     }
 
     private fun updateTemperatures(temperatureMin: Int, temperatureMax: Int) {
@@ -134,7 +137,9 @@ class TomorrowWeatherFragment : ScopedFragment(), KodeinAware {
 
         val hours = weatherData.hourly.data
         val data = ArrayList<Entry>()
-        for (i in 24..47) {
+        val tomorrowStartHour = weatherData.getTomorrowStartHour()
+        val tomorrowEndHour = tomorrowStartHour + 23
+        for (i in tomorrowStartHour..tomorrowEndHour) {
             data.add(Entry(i.toFloat(), hours[i].temperature.roundToInt().toFloat()))
         }
 
@@ -296,5 +301,10 @@ class TomorrowWeatherFragment : ScopedFragment(), KodeinAware {
         precipLineChart.invalidate()
         precipLineChart.visibility = View.VISIBLE
         precip_chart_label.visibility = View.VISIBLE
+    }
+
+    fun updateRefreshTime(time: Int, timezone: String) {
+        val formattedDate = viewModel.unixTimeToActualTime(time, timezone)
+        currentTime.text = "Last updated at $formattedDate"
     }
 }

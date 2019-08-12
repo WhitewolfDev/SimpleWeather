@@ -21,4 +21,7 @@ interface WeatherResponseDao {
     // This should only ever be one thing, since there's only one Currently in the table
     @Query("select * from weather_response where id = $WEATHER_RESPONSE_ID")
     fun getWeather() : LiveData<WeatherResponse>
+
+    @Query("select * from weather_response where id = $WEATHER_RESPONSE_ID")
+    fun getWeatherNonLive() : WeatherResponse?
 }
