@@ -33,11 +33,15 @@ class LocationProviderImpl(
     }
 
     override suspend fun getLatitude(): Double {
-        return 36.0
+        val lastLocation = getLastDeviceLocation().await() ?: return 0.0
+
+        return lastLocation.latitude
     }
 
     override suspend fun getLongitude(): Double {
-        return -79.0
+        val lastLocation = getLastDeviceLocation().await() ?: return 0.0
+
+        return lastLocation.longitude
     }
 
     override suspend fun getPreferrredLocationString(): String {
