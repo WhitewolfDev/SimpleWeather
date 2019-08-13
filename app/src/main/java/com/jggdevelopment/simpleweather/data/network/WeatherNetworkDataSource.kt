@@ -1,7 +1,7 @@
 package com.jggdevelopment.simpleweather.data.network
 
 import androidx.lifecycle.LiveData
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 
 interface WeatherNetworkDataSource {
     val downloadedWeatherResponse: LiveData<WeatherResponse>

@@ -28,4 +28,9 @@
     <navigation
         android:id="@+id/navigation"
         app:startDestination="@id/tomorrowWeatherFragment" />
+    <fragment
+        android:id="@+id/chooseCityFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.cities.ChooseCityFragment"
+        android:label="fragment_choose_city"
+        tools:layout="@layout/choose_city_fragment" />
 </navigation>

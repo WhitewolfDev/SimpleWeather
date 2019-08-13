@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 
 import com.jggdevelopment.simpleweather.R
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 import com.jggdevelopment.simpleweather.ui.base.ScopedFragment
 import com.jggdevelopment.simpleweather.ui.weather.viewmodel.WeatherResponseViewModel
 import com.jggdevelopment.simpleweather.ui.weather.viewmodel.WeatherResponseViewModelFactory

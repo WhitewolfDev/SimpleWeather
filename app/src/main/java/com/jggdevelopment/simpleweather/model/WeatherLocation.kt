@@ -7,8 +7,8 @@ import java.io.IOException
 import java.util.*
 
 class WeatherLocation (
-    private val latitude: Double,
-    private val longitude: Double
+    val latitude: Double,
+    val longitude: Double
 ) {
     fun getLocationString(context: Context): String {
         val geocoder = Geocoder(context, Locale.getDefault())
@@ -19,15 +19,15 @@ class WeatherLocation (
             e.printStackTrace()
         }
 
-        var title = "Weather"
+        var name = "Weather"
         if (addresses.isNotEmpty()) {
             when {
-                addresses[0].locality != null -> title = addresses[0].locality
-                addresses[0].subLocality != null -> title = addresses[0].subLocality
-                addresses[0].subAdminArea != null -> title = addresses[0].subAdminArea
+                addresses[0].locality != null -> name = addresses[0].locality
+                addresses[0].subLocality != null -> name = addresses[0].subLocality
+                addresses[0].subAdminArea != null -> name = addresses[0].subAdminArea
             }
         }
 
-        return title
+        return name
     }
 }

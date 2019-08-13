@@ -2,7 +2,7 @@ package com.jggdevelopment.simpleweather.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jggdevelopment.simpleweather.BuildConfig
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

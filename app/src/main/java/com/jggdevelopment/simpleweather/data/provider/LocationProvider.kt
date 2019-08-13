@@ -6,4 +6,5 @@ interface LocationProvider {
     suspend fun hasLocationChanged(lastWeatherLocation: WeatherLocation): Boolean
     suspend fun getLatitude(): Double
     suspend fun getLongitude(): Double
+    suspend fun getPreferrredLocationString(): String
 }

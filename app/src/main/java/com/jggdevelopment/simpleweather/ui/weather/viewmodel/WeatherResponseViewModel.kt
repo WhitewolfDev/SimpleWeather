@@ -2,7 +2,7 @@ package com.jggdevelopment.simpleweather.ui.weather.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel;
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 import com.jggdevelopment.simpleweather.data.provider.UnitProvider
 import com.jggdevelopment.simpleweather.data.repository.ForecastRepository
 import com.jggdevelopment.simpleweather.internal.UnitSystem

@@ -3,7 +3,7 @@ package com.jggdevelopment.simpleweather.data.network
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 import com.jggdevelopment.simpleweather.internal.NoConnectivityException
 
 class WeatherNetworkDataSourceImpl(

@@ -3,7 +3,7 @@ package com.jggdevelopment.simpleweather.data.repository
 import androidx.lifecycle.LiveData
 import com.jggdevelopment.simpleweather.data.db.WeatherResponseDao
 import com.jggdevelopment.simpleweather.data.network.WeatherNetworkDataSource
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 import com.jggdevelopment.simpleweather.data.provider.LocationProvider
 import com.jggdevelopment.simpleweather.data.provider.UnitProvider
 import com.jggdevelopment.simpleweather.internal.UnitSystem
@@ -41,7 +41,6 @@ class ForecastRepositoryImpl(
     }
 
     private suspend fun initWeatherData() {
-        val test = weatherResponseDao.getWeather()
         val lastWeatherLocation = weatherResponseDao.getWeatherNonLive()
 
         if (lastWeatherLocation == null || locationProvider.hasLocationChanged(lastWeatherLocation.getLocation())) {

@@ -1,4 +1,4 @@
-package com.jggdevelopment.simpleweather.data.db.entity
+package com.jggdevelopment.simpleweather.data.db.entity.weather
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

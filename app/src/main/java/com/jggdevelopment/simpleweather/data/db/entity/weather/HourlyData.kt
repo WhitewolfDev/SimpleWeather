@@ -1,13 +1,10 @@
-package com.jggdevelopment.simpleweather.data.db.entity
+package com.jggdevelopment.simpleweather.data.db.entity.weather
+
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import org.threeten.bp.Instant
-import java.time.ZoneId
-import java.time.ZonedDateTime
+import com.google.gson.annotations.SerializedName
 
-data class Currently(
+data class HourlyData(
         @ColumnInfo(name = "apparentTemperature")
         val apparentTemperature: Double,
         @ColumnInfo(name = "cloudCover")
@@ -18,22 +15,24 @@ data class Currently(
         val humidity: Double,
         @ColumnInfo(name = "icon")
         val icon: String,
-        @ColumnInfo(name = "nearestStormBearing")
-        val nearestStormBearing: Int,
-        @ColumnInfo(name = "nearestStormDistance")
-        val nearestStormDistance: Int,
         @ColumnInfo(name = "ozone")
         val ozone: Double,
         @ColumnInfo(name = "precipIntensity")
         val precipIntensity: Double,
         @ColumnInfo(name = "precipProbability")
         val precipProbability: Double,
+        @ColumnInfo(name = "precipType")
+        val precipType: String,
         @ColumnInfo(name = "pressure")
         val pressure: Double,
         @ColumnInfo(name = "summary")
         val summary: String,
         @ColumnInfo(name = "temperature")
         val temperature: Double,
+        @ColumnInfo(name = "temperatureHigh")
+        val temperatureHigh: Double,
+        @ColumnInfo(name = "temperatureLow")
+        val temperatureLow: Double,
         @ColumnInfo(name = "time")
         val time: Int,
         @ColumnInfo(name = "uvIndex")

@@ -7,11 +7,8 @@ import com.jggdevelopment.simpleweather.internal.UnitSystem
 
 const val USE_METRIC = "USE_METRIC"
 
-class UnitProviderImpl(context: Context) : UnitProvider {
-    private val appContext = context.applicationContext
+class UnitProviderImpl(context: Context) : PreferenceProvider(context), UnitProvider {
 
-    private val preferences: SharedPreferences
-        get() = PreferenceManager.getDefaultSharedPreferences(appContext)
 
     override fun getUnitSystem(): UnitSystem {
         val useMetric = preferences.getBoolean(USE_METRIC, false)

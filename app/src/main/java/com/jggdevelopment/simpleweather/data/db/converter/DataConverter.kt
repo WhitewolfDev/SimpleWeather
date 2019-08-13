@@ -3,9 +3,9 @@ package com.jggdevelopment.simpleweather.data.db.converter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jggdevelopment.simpleweather.data.db.entity.DailyData
-import com.jggdevelopment.simpleweather.data.db.entity.HourlyData
-import com.jggdevelopment.simpleweather.data.db.entity.MinutelyData
+import com.jggdevelopment.simpleweather.data.db.entity.weather.DailyData
+import com.jggdevelopment.simpleweather.data.db.entity.weather.HourlyData
+import com.jggdevelopment.simpleweather.data.db.entity.weather.MinutelyData
 
 class DataConverter {
     @TypeConverter

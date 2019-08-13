@@ -5,9 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jggdevelopment.simpleweather.data.db.entity.Currently
-import com.jggdevelopment.simpleweather.data.db.entity.WEATHER_RESPONSE_ID
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WEATHER_RESPONSE_ID
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 
 @Dao
 interface WeatherResponseDao {

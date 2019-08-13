@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jggdevelopment.simpleweather.data.db.converter.DataConverter
-import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
+import com.jggdevelopment.simpleweather.data.db.entity.weather.WeatherResponse
 
 
 @Database(
@@ -15,7 +15,7 @@ import com.jggdevelopment.simpleweather.data.db.entity.WeatherResponse
 )
 @TypeConverters(DataConverter::class)
 abstract class ForecastDatabase : RoomDatabase() {
-    abstract fun currentWeatherDao(): WeatherResponseDao
+    abstract fun weatherResponseDao(): WeatherResponseDao
 
     companion object {
         @Volatile private var instance: ForecastDatabase? = null
