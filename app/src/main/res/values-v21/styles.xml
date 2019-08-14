@@ -17,7 +17,6 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/precipLightBlue</item>
         <item name="colorPrimaryDark">@color/precipLightBlue</item>
-        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
         <item name="android:textColor">@color/greyText</item>
         <item name="tabStyle">@style/TabLayoutLight</item>

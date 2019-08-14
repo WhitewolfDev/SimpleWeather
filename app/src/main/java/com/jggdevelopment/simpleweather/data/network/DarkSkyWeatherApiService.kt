@@ -22,13 +22,10 @@ interface DarkSkyWeatherApiService {
     ): Deferred<WeatherResponse>
 
     companion object {
-        operator fun invoke(
-                connectivityInterceptor: ConnectivityInterceptor
-        ): DarkSkyWeatherApiService {
+        operator fun invoke(): DarkSkyWeatherApiService {
 
             // add the interceptor to the HTTP client
             val okHttpClient = OkHttpClient.Builder()
-                    .addInterceptor(connectivityInterceptor)
                     .build()
 
             return Retrofit.Builder()
