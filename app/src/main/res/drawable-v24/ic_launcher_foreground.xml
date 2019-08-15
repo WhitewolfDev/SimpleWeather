@@ -106,10 +106,10 @@
               android:centerX="231.41081"
               android:centerY="225.46999"
               android:type="radial">
-            <item android:offset="0" android:color="#FFF7D02F"/>
-            <item android:offset="0.00561796" android:color="#FFF7D02F"/>
-            <item android:offset="0.02165307" android:color="#FFF7D02F"/>
-            <item android:offset="1" android:color="#FFFC7146"/>
+            <item android:offset="0" android:color="#FFF9A839"/>
+            <item android:offset="0.00561796" android:color="#FFF9A839"/>
+            <item android:offset="0.02165307" android:color="#FFF9A839"/>
+            <item android:offset="1" android:color="#FFF9A839"/>
           </gradient>
         </aapt:attr>
       </path>

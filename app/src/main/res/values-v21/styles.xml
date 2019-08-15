@@ -11,15 +11,16 @@
     <attr name="humidityIconDrawable" format="reference"/>
 
     <!-- Base application theme. -->
-    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LightTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryLight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/precipLightBlue</item>
+        <item name="colorPrimaryDark">@color/precipLightBlue</item>
         <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
         <item name="android:textColor">@color/greyText</item>
         <item name="tabStyle">@style/TabLayoutLight</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="navigationIconColor">@color/greyText</item>
 
         <item name="dropIconDrawable">@drawable/drop_light</item>
@@ -32,7 +33,7 @@
         <item name="starDrawable">@drawable/star_button_light</item>
     </style>
 
-    <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="DarkTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
@@ -52,15 +53,23 @@
         <item name="myLocationDrawable">@drawable/ic_my_location_dark</item>
         <item name="starDrawable">@drawable/star_button_dark</item>
     </style>
+    
+    <style name="ToolbarThemeLight" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@color/greyText</item>
+    </style>
+
+    <style name="ToolbarThemeDark" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
 
     <style name="PreferencesLight" parent="LightTheme">
         <item name="colorPrimary">@android:color/white</item>
-        <item name="colorAccent">@color/accentBlue</item>
+        <item name="colorAccent">@color/precipBlueDark</item>
     </style>
 
     <style name="PreferencesDark" parent="DarkTheme">
         <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/accentBlue</item>
+        <item name="colorAccent">@color/precipBlueDark</item>
     </style>
 
     <style name="TabLayoutLight" parent="Widget.Design.TabLayout">
