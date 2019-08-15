@@ -6,6 +6,7 @@ import androidx.preference.PreferenceManager
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.jggdevelopment.simpleweather.data.db.ForecastDatabase
+import com.jggdevelopment.simpleweather.data.db.LocationSearchDatabase
 import com.jggdevelopment.simpleweather.data.network.*
 import com.jggdevelopment.simpleweather.data.provider.LocationProvider
 import com.jggdevelopment.simpleweather.data.provider.LocationProviderImpl
@@ -13,6 +14,9 @@ import com.jggdevelopment.simpleweather.data.provider.UnitProvider
 import com.jggdevelopment.simpleweather.data.provider.UnitProviderImpl
 import com.jggdevelopment.simpleweather.data.repository.ForecastRepository
 import com.jggdevelopment.simpleweather.data.repository.ForecastRepositoryImpl
+import com.jggdevelopment.simpleweather.data.repository.LocationSearchRepository
+import com.jggdevelopment.simpleweather.data.repository.LocationSearchRepositoryImpl
+import com.jggdevelopment.simpleweather.ui.cities.viewmodel.LocationResponseViewModelFactory
 import com.jggdevelopment.simpleweather.ui.weather.viewmodel.WeatherResponseViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -28,13 +32,16 @@ class ForecastApplication : Application(), KodeinAware{
 
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().weatherResponseDao() }
+        bind() from singleton { instance<LocationSearchDatabase>().locationSearchDao() }
         bind() from singleton { DarkSkyWeatherApiService() }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance(), instance()) }
+        bind<LocationSearchRepository>() with singleton { LocationSearchRepositoryImpl(instance(), instance()) }
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
         bind() from provider { WeatherResponseViewModelFactory(instance(), instance()) }
+        bind() from provider { LocationResponseViewModelFactory(instance()) }
     }
 
     override fun onCreate() {

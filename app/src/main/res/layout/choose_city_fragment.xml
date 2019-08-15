@@ -13,7 +13,7 @@
         android:elevation="4dp">
 
         <RelativeLayout
-            android:id="@+id/search_box"
+            android:id="@+id/search_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -34,6 +34,7 @@
                 android:tint="@color/precipLightBlue"/>
 
             <EditText
+                android:id="@+id/search_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -47,6 +48,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/search_button"
             android:layout_width="112dp"
             android:layout_height="42dp"
             android:layout_below="@+id/search_box"

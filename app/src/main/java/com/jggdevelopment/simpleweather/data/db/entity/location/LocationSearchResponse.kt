@@ -1,13 +1,10 @@
 package com.jggdevelopment.simpleweather.data.db.entity.location
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.TypeConverters
+import androidx.room.*
 import com.jggdevelopment.simpleweather.data.db.converter.DataConverter
 
-@Entity(tableName = "location_search_response")
-class LocationGeocode(
+@Entity(tableName = "location_search_results")
+class LocationSearchResponse(
         @ColumnInfo(name = "type")
         val type: String,
         @TypeConverters(DataConverter::class)
@@ -18,5 +15,6 @@ class LocationGeocode(
         @ColumnInfo(name = "attribution")
         val attribution: String
 ) {
-
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
 }

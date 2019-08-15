@@ -1,7 +1,7 @@
 package com.jggdevelopment.simpleweather.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.jggdevelopment.simpleweather.data.db.entity.location.LocationGeocode
+import com.jggdevelopment.simpleweather.data.db.entity.location.LocationSearchResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -14,7 +14,7 @@ interface MapboxApiService {
     fun searchPlaces(
             @Path("endpoint") endpoint: String?,
             @Path("search_text") searchText: String?
-    ): Deferred<LocationGeocode>
+    ): Deferred<LocationSearchResponse>
 
     companion object {
         operator fun invoke(): MapboxApiService {
