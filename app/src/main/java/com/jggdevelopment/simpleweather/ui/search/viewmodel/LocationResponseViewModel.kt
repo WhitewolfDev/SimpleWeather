@@ -1,4 +1,4 @@
-package com.jggdevelopment.simpleweather.ui.cities.viewmodel
+package com.jggdevelopment.simpleweather.ui.search.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +8,10 @@ import com.jggdevelopment.simpleweather.data.repository.LocationSearchRepository
 class LocationResponseViewModel (
         private val locationSearchRepository: LocationSearchRepository
 ) : ViewModel() {
+
     lateinit var locationResponse: LiveData<out LocationSearchResponse>
 
     suspend fun searchLocation(query: String) {
-        locationSearchRepository.searchForLocation(query)
+        locationResponse = locationSearchRepository.searchForLocation(query)
     }
 }

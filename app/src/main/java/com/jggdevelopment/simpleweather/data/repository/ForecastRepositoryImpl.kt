@@ -30,9 +30,16 @@ class ForecastRepositoryImpl(
         }
     }
 
-    override suspend fun getWeather(): LiveData<out WeatherResponse> {
+    override suspend fun getWeatherWithLocation(): LiveData<out WeatherResponse> {
         return withContext(Dispatchers.IO) {
-            initWeatherData()
+            initWeatherDataWithLocation()
+            return@withContext weatherResponseDao.getWeather()
+        }
+    }
+
+    override suspend fun getWeatherWithCoordinates(latitude: Double, longitude: Double): LiveData<out WeatherResponse> {
+        return withContext(Dispatchers.IO) {
+            initWeatherDataWithLocation()
             return@withContext weatherResponseDao.getWeather()
         }
     }
@@ -43,23 +50,31 @@ class ForecastRepositoryImpl(
         }
     }
 
-    private suspend fun initWeatherData() {
+    private suspend fun initWeatherDataWithLocation() {
         val lastWeatherLocation = weatherResponseDao.getWeatherNonLive()
 
-        if (lastWeatherLocation == null || locationProvider.hasLocationChanged(lastWeatherLocation.getLocation())) { fetchCurrentWeather()
+        if (lastWeatherLocation == null || locationProvider.hasLocationChanged(lastWeatherLocation.getLocation())) { fetchCurrentWeatherUsingLocation()
             return
         }
 
         if (isFetchCurrentNeeded(lastWeatherLocation.getLastFetchTime()))
-            fetchCurrentWeather()
+            fetchCurrentWeatherUsingLocation()
     }
 
-    private suspend fun fetchCurrentWeather() {
+    private suspend fun fetchCurrentWeatherUsingLocation() {
         val units = unitProvider.getUnitSystem()
         if (units == UnitSystem.IMPERIAL)
             weatherNetworkDataSource.fetchCurrentWeather(locationProvider.getLatitude(), locationProvider.getLongitude(), "us", Locale.getDefault().language)
         else
             weatherNetworkDataSource.fetchCurrentWeather(locationProvider.getLatitude(), locationProvider.getLongitude(), "ca", Locale.getDefault().language)
+    }
+
+    private suspend fun fetchCurrentWeatherUsingCoordinates(latitude: Double, longitude: Double) {
+        val units = unitProvider.getUnitSystem()
+        if (units == UnitSystem.IMPERIAL)
+            weatherNetworkDataSource.fetchCurrentWeather(latitude, longitude, "us", Locale.getDefault().language)
+        else
+            weatherNetworkDataSource.fetchCurrentWeather(latitude, longitude, "ca", Locale.getDefault().language)
     }
 
     // check if data was fetched within the last five minutes

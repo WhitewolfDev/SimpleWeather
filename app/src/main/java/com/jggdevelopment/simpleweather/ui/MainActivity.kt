@@ -15,7 +15,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
+import com.jggdevelopment.simpleweather.BuildConfig
 import com.jggdevelopment.simpleweather.R
+import com.mapbox.mapboxsdk.Mapbox
 import kotlinx.android.synthetic.main.activity_main.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -41,6 +43,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        Mapbox.getInstance(applicationContext, BuildConfig.mapboxAPI_KEY)
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 

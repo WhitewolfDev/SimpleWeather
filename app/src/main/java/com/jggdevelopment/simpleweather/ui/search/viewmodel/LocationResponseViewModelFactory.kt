@@ -1,4 +1,4 @@
-package com.jggdevelopment.simpleweather.ui.cities.viewmodel
+package com.jggdevelopment.simpleweather.ui.search.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

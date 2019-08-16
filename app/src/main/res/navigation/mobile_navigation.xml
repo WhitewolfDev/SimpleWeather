@@ -30,7 +30,11 @@
         app:startDestination="@id/tomorrowWeatherFragment" />
     <fragment
         android:id="@+id/chooseCityFragment"
-        android:name="com.jggdevelopment.simpleweather.ui.cities.ChooseCityFragment"
+        android:name="com.jggdevelopment.simpleweather.ui.search.ChooseCityFragment"
         android:label="fragment_choose_city"
-        tools:layout="@layout/choose_city_fragment" />
+        tools:layout="@layout/choose_city_fragment" >
+        <action
+            android:id="@+id/city_search_result_chosen_action"
+            app:destination="@id/currentWeatherFragment" />
+    </fragment>
 </navigation>

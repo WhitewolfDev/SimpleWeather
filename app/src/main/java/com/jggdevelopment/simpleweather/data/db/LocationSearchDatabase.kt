@@ -14,7 +14,7 @@ import com.jggdevelopment.simpleweather.data.db.entity.location.LocationSearchRe
 )
 @TypeConverters(DataConverter::class)
 abstract class LocationSearchDatabase : RoomDatabase() {
-    abstract fun locationSearchDao(): LocationResponseDao
+    abstract fun locationResponseDao(): LocationResponseDao
 
     companion object {
         @Volatile private var instance: LocationSearchDatabase? = null

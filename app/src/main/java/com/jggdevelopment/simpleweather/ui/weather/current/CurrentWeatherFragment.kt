@@ -59,7 +59,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware, SwipeRefreshLayout
     }
 
     private fun bindUI() = launch {
-        viewModel.refreshWeather()
+        viewModel.refreshWeatherWithLocation()
         val currentWeather = viewModel.weather
         val owner = viewLifecycleOwner
 

@@ -22,8 +22,12 @@ class WeatherResponseViewModel (
     val isMetric: Boolean
         get() = unitSystem == UnitSystem.METRIC
 
-    suspend fun refreshWeather() {
-        weather = forecastRepository.getWeather()
+    suspend fun refreshWeatherWithLocation() {
+        weather = forecastRepository.getWeatherWithLocation()
+    }
+
+    suspend fun refreshWeatherWithCoordinates(latitude: Double, longitude: Double) {
+        weather = forecastRepository.getWeatherWithCoordinates(latitude, longitude)
     }
 
     fun unixTimeToActualTime(time: Int, timezone: String): String {

@@ -51,7 +51,7 @@ class TomorrowWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch {
-        viewModel.refreshWeather()
+        viewModel.refreshWeatherWithLocation()
         val currentWeather = viewModel.weather
         currentWeather.observe(this@TomorrowWeatherFragment, Observer {
             if (it == null) return@Observer

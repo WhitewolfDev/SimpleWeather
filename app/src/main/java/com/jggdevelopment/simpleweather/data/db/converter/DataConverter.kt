@@ -3,6 +3,7 @@ package com.jggdevelopment.simpleweather.data.db.converter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.jggdevelopment.simpleweather.data.db.entity.location.Feature
 import com.jggdevelopment.simpleweather.data.db.entity.weather.DailyData
 import com.jggdevelopment.simpleweather.data.db.entity.weather.HourlyData
 import com.jggdevelopment.simpleweather.data.db.entity.weather.MinutelyData
@@ -47,6 +48,48 @@ class DataConverter {
     fun toDailyDataList(dataString: String): List<DailyData> {
         val gson = Gson()
         val type = object : TypeToken<List<DailyData>>() {}.type
+        return gson.fromJson(dataString, type)
+    }
+
+    @TypeConverter
+    fun fromCoordinatesList(data: List<Double>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<Double>>() {}.type
+        return gson.toJson(data, type)
+    }
+
+    @TypeConverter
+    fun toCoordinatesList(dataString: String): List<Double> {
+        val gson = Gson()
+        val type = object : TypeToken<List<Double>>() {}.type
+        return gson.fromJson(dataString, type)
+    }
+
+    @TypeConverter
+    fun fromFeaturesList(data: List<Feature>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<Feature>>() {}.type
+        return gson.toJson(data, type)
+    }
+
+    @TypeConverter
+    fun toFeaturesList(dataString: String): List<Feature> {
+        val gson = Gson()
+        val type = object : TypeToken<List<Feature>>() {}.type
+        return gson.fromJson(dataString, type)
+    }
+
+    @TypeConverter
+    fun fromQueryList(data: List<String>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
+        return gson.toJson(data, type)
+    }
+
+    @TypeConverter
+    fun toQueryList(dataString: String): List<String> {
+        val gson = Gson()
+        val type = object : TypeToken<List<String>>() {}.type
         return gson.fromJson(dataString, type)
     }
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.cities.ChooseCityFragment">
+    tools:context=".ui.search.ChooseCityFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:id="@+id/search_button"
             android:layout_width="112dp"
             android:layout_height="42dp"
-            android:layout_below="@+id/search_box"
+            android:layout_below="@+id/search_container"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:background="@drawable/button_capsule"
@@ -78,13 +78,20 @@
             android:textSize="18sp"
             android:fontFamily="@font/roboto_light"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_results_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="No saved locations yet"
             android:textSize="16sp"
-            android:textColor="@color/greyTextLight"/>
+            android:textColor="@color/greyTextLight"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
     </RelativeLayout>
 

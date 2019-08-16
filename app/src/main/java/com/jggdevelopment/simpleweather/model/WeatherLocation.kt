@@ -10,6 +10,8 @@ class WeatherLocation (
     val latitude: Double,
     val longitude: Double
 ) {
+    lateinit var name: String
+
     fun getLocationString(context: Context): String {
         val geocoder = Geocoder(context, Locale.getDefault())
         lateinit var addresses: List<Address>
@@ -19,7 +21,6 @@ class WeatherLocation (
             e.printStackTrace()
         }
 
-        var name = "Weather"
         if (addresses.isNotEmpty()) {
             when {
                 addresses[0].locality != null -> name = addresses[0].locality
