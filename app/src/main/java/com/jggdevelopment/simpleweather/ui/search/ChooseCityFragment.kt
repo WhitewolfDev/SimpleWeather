@@ -54,7 +54,6 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
                 .get(WeatherResponseViewModel::class.java)
 
         updateToolbar()
-        bindUI()
     }
 
     fun updateToolbar() {
@@ -62,8 +61,9 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
     }
 
-    fun bindUI() = launch(Dispatchers.Main){
+    fun bindUI() = launch {
         val locationResults = locationViewModel.locationResponse
+        val locationResultsValue = locationResults.value
         val owner = viewLifecycleOwner
 
         locationResults.observe(owner, Observer {
@@ -85,9 +85,10 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
     fun searchLocations() = launch {
         val searchText = search_box.text.toString()
 
-        if (searchText != "")
+        if (searchText != "") {
             locationViewModel.searchLocation(search_box.text.toString())
-        else
+            bindUI()
+        } else
             Toast.makeText(context?.applicationContext, "Please enter a search term", Toast.LENGTH_SHORT).show()
     }
 
@@ -108,7 +109,13 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
         }
 
         groupAdapter.setOnItemClickListener { item, view ->
-            weatherViewModel.refreshWeatherWithCoordinates(item)
+            (item as? LocationSearchResultListItem)?.let {
+                refreshWeather(it.feature.coordinates[0], it.feature.coordinates[1])
+            }
         }
+    }
+
+    private fun refreshWeather(latitude: Double, longitude: Double) = launch {
+        weatherViewModel.refreshWeatherWithCoordinates(latitude, longitude)
     }
 }

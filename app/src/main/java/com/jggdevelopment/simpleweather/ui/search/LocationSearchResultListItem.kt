@@ -7,7 +7,7 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.location_search_result_row.*
 
 class LocationSearchResultListItem (
-        private val feature: Feature
+        val feature: Feature
 ) : Item() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.apply {

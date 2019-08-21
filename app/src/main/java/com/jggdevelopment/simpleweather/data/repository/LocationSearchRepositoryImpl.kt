@@ -5,15 +5,27 @@ import com.jggdevelopment.simpleweather.data.db.LocationResponseDao
 import com.jggdevelopment.simpleweather.data.db.entity.location.LocationSearchResponse
 import com.jggdevelopment.simpleweather.data.network.LocationNetworkDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LocationSearchRepositoryImpl (
         private val locationResponseDao: LocationResponseDao,
         private val locationNetworkDataSource: LocationNetworkDataSource
 ): LocationSearchRepository {
+
+    init {
+        locationNetworkDataSource.downloadedLocationSearchResults.observeForever { locationResults ->
+            persistFetchedLocations(locationResults)
+        }
+    }
+
     override suspend fun searchForLocation(query: String): LiveData<out LocationSearchResponse> {
+        initSearch(query)
+        val data = locationResponseDao.searchForLocation(query).value
         return withContext(Dispatchers.IO) {
             initSearch(query)
+            val data = locationResponseDao.searchForLocation(query)
             return@withContext locationResponseDao.searchForLocation(query)
         }
     }
@@ -34,5 +46,11 @@ class LocationSearchRepositoryImpl (
 
     private suspend fun fetchLocationResults(query: String) {
         locationNetworkDataSource.fetchLocationSearchResults("mapbox.places", query)
+    }
+
+    private fun persistFetchedLocations(fetchedLocationResults: LocationSearchResponse) {
+        GlobalScope.launch(Dispatchers.IO) {
+            locationResponseDao.upsert(fetchedLocationResults)
+        }
     }
 }

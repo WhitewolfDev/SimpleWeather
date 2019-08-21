@@ -91,6 +91,7 @@ class LocationProviderImpl(
         return if (hasLocationPermission())
             fusedLocationProviderClient.lastLocation.asDeferred()
         else
+            // TODO: this crashes the app on first open because the location isn't provided.  Don't do that.
             throw LocationPermissionNotGrantedException()
     }
 
