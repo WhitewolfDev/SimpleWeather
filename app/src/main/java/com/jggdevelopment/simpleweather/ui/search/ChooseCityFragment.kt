@@ -63,7 +63,6 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
 
     fun bindUI() = launch {
         val locationResults = locationViewModel.locationResponse
-        val locationResultsValue = locationResults.value
         val owner = viewLifecycleOwner
 
         locationResults.observe(owner, Observer {
@@ -86,7 +85,7 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
         val searchText = search_box.text.toString()
 
         if (searchText != "") {
-            locationViewModel.searchLocation(search_box.text.toString())
+            locationViewModel.searchLocation("[\"" + search_box.text.toString() + "\"]")
             bindUI()
         } else
             Toast.makeText(context?.applicationContext, "Please enter a search term", Toast.LENGTH_SHORT).show()
@@ -102,6 +101,8 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
         val groupAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(items)
         }
+
+        groupAdapter.notifyDataSetChanged()
 
         search_results_rv.apply {
             layoutManager = LinearLayoutManager(this@ChooseCityFragment.context)

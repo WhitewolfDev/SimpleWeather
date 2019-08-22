@@ -20,6 +20,7 @@ class LocationSearchRepositoryImpl (
         }
     }
 
+    // update search data in db if necessary, then return the data that was searched for.
     override suspend fun searchForLocation(query: String): LiveData<out LocationSearchResponse> {
         return withContext(Dispatchers.IO) {
             initSearch(query)
@@ -27,6 +28,7 @@ class LocationSearchRepositoryImpl (
         }
     }
 
+    // if a fetch is necessary (query has not already been searched), fetch search results
     private suspend fun initSearch(query: String) {
         if (isFetchLocationResultsNeeded(query))
             fetchLocationResults(query)

@@ -51,10 +51,13 @@ class ForecastRepositoryImpl(
         }
     }
 
+    // get the weather already stored in the db.  If there isn't one, or the location has changed
+    // fetch new data.  Or if it's been too long since the last fetch, get new datad
     private suspend fun initWeatherDataWithLocation() {
         val lastWeatherLocation = weatherResponseDao.getWeatherNonLive()
 
-        if (lastWeatherLocation == null || locationProvider.hasLocationChanged(lastWeatherLocation.getLocation())) { fetchCurrentWeatherUsingLocation()
+        if (lastWeatherLocation == null || locationProvider.hasLocationChanged(lastWeatherLocation.getLocation())) {
+            fetchCurrentWeatherUsingLocation()
             return
         }
 

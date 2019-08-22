@@ -12,8 +12,10 @@ class LocationResponseViewModel (
 
     lateinit var locationResponse: LiveData<out LocationSearchResponse>
 
-    suspend fun searchLocation(query: String) {
+    suspend fun searchLocation(query: String) : LiveData<out LocationSearchResponse> {
         locationResponse = locationSearchRepository.searchForLocation(query)
         Log.d("db", locationResponse.value.toString())
+
+        return locationResponse
     }
 }

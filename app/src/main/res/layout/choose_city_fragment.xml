@@ -67,6 +67,7 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/saved_locations_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Saved Locations"
@@ -80,8 +81,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_results_rv"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/saved_locations_header"
+            />
 
         <TextView
             android:layout_width="wrap_content"
