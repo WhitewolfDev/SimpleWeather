@@ -21,11 +21,8 @@ class LocationSearchRepositoryImpl (
     }
 
     override suspend fun searchForLocation(query: String): LiveData<out LocationSearchResponse> {
-        initSearch(query)
-        val data = locationResponseDao.searchForLocation(query).value
         return withContext(Dispatchers.IO) {
             initSearch(query)
-            val data = locationResponseDao.searchForLocation(query)
             return@withContext locationResponseDao.searchForLocation(query)
         }
     }

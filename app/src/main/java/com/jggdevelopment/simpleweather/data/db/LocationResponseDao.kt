@@ -14,6 +14,6 @@ interface LocationResponseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(locationResults: LocationSearchResponse)
 
-    @Query("select * from location_search_results WHERE `query` = :searchQuery")
-    fun searchForLocation(searchQuery: String): LiveData<LocationSearchResponse>
+    @Query("select * from location_search_results WHERE searchQuery = :query")
+    fun searchForLocation(query: String): LiveData<LocationSearchResponse>
 }

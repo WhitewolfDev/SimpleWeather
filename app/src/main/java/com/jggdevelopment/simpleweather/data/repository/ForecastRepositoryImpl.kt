@@ -39,6 +39,7 @@ class ForecastRepositoryImpl(
 
     override suspend fun getWeatherWithCoordinates(latitude: Double, longitude: Double): LiveData<out WeatherResponse> {
         return withContext(Dispatchers.IO) {
+            // TODO: I don't think this should be calling the same function as the method above.  Look into it.
             initWeatherDataWithLocation()
             return@withContext weatherResponseDao.getWeather()
         }

@@ -1,5 +1,6 @@
 package com.jggdevelopment.simpleweather.ui.search.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.jggdevelopment.simpleweather.data.db.entity.location.LocationSearchResponse
@@ -13,5 +14,6 @@ class LocationResponseViewModel (
 
     suspend fun searchLocation(query: String) {
         locationResponse = locationSearchRepository.searchForLocation(query)
+        Log.d("db", locationResponse.value.toString())
     }
 }

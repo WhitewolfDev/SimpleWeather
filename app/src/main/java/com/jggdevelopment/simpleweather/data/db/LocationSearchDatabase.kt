@@ -10,7 +10,7 @@ import com.jggdevelopment.simpleweather.data.db.entity.location.LocationSearchRe
 
 @Database(
         entities = [LocationSearchResponse::class],
-        version = 1
+        version = 2
 )
 @TypeConverters(DataConverter::class)
 abstract class LocationSearchDatabase : RoomDatabase() {
@@ -27,6 +27,7 @@ abstract class LocationSearchDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
                         LocationSearchDatabase::class.java, "locationSearch.db")
+                        .fallbackToDestructiveMigration()
                         .build()
     }
 }
