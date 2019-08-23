@@ -17,4 +17,10 @@ interface LocationResponseDao {
 
     @Query("select * from location_search_results WHERE searchQuery = :query")
     fun searchForLocation(query: String): LiveData<LocationSearchResponse>
+
+    @Query("select * from location_search_results WHERE searchQuery = :query")
+    fun searchForLocationNonLive(query: String): LocationSearchResponse?
+
+    @Query("delete from location_search_results")
+    fun nukeTable()
 }

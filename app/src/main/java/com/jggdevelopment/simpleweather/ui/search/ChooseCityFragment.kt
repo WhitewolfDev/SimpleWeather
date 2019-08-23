@@ -81,11 +81,14 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
         }
     }
 
+    // TODO: search text can not be more than 20 words or more than 256 characters.  Need to account for this
     fun searchLocations() = launch {
-        val searchText = search_box.text.toString()
+        var searchText = search_box.text.toString()
 
         if (searchText != "") {
-            locationViewModel.searchLocation("[\"" + search_box.text.toString() + "\"]")
+            val re = Regex("[^A-Za-z0-9 ]")
+            searchText = re.replace(search_box.text.toString(), "")
+            locationViewModel.searchLocation(searchText)
             bindUI()
         } else
             Toast.makeText(context?.applicationContext, "Please enter a search term", Toast.LENGTH_SHORT).show()

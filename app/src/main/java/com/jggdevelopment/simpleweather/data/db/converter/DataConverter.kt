@@ -1,6 +1,7 @@
 package com.jggdevelopment.simpleweather.data.db.converter
 
 import androidx.room.TypeConverter
+import androidx.room.util.StringUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jggdevelopment.simpleweather.data.db.entity.location.Feature
@@ -81,15 +82,17 @@ class DataConverter {
 
     @TypeConverter
     fun fromQueryList(data: List<String>): String {
-        val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
-        return gson.toJson(data, type)
+        val builder = StringBuilder()
+        for (s in data) {
+            builder.append(s)
+            builder.append(" ")
+        }
+
+        return builder.toString()
     }
 
     @TypeConverter
     fun toQueryList(dataString: String): List<String> {
-        val gson = Gson()
-        val type = object : TypeToken<List<String>>() {}.type
-        return gson.fromJson(dataString, type)
+        return dataString.split(" ")
     }
 }
