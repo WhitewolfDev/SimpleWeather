@@ -83,9 +83,11 @@ class DataConverter {
     @TypeConverter
     fun fromQueryList(data: List<String>): String {
         val builder = StringBuilder()
-        for (s in data) {
-            builder.append(s)
+        builder.append(data[0])
+
+        for (i in 1 until data.size) {
             builder.append(" ")
+            builder.append(data[i])
         }
 
         return builder.toString()

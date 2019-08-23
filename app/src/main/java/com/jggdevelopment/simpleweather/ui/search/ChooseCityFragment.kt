@@ -88,6 +88,7 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
         if (searchText != "") {
             val re = Regex("[^A-Za-z0-9 ]")
             searchText = re.replace(search_box.text.toString(), "")
+            searchText = searchText.trim()
             locationViewModel.searchLocation(searchText)
             bindUI()
         } else
