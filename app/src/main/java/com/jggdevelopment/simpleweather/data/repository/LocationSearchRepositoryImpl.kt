@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class LocationSearchRepositoryImpl (
         private val locationResponseDao: LocationResponseDao,
@@ -15,7 +16,6 @@ class LocationSearchRepositoryImpl (
 ): LocationSearchRepository {
 
     init {
-        // locationResponseDao.nukeTable()
         locationNetworkDataSource.downloadedLocationSearchResults.observeForever { locationResults ->
             persistFetchedLocations(locationResults)
         }
@@ -37,9 +37,8 @@ class LocationSearchRepositoryImpl (
 
     private fun isFetchLocationResultsNeeded(query: String) : Boolean {
         // get the cached results.  If it's null, return true because it needs to be updated
-        val cachedResults = locationResponseDao.searchForLocationNonLive(query.toLowerCase())
-
-        if (cachedResults == null) return true
+        val cachedResults = locationResponseDao.searchForLocationNonLive(query.toLowerCase(Locale.getDefault()))
+                ?: return true
 
         // if the results are empty, it needs to be fetched, else it doesn't
         return cachedResults.features.isEmpty()

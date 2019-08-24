@@ -15,12 +15,15 @@ interface LocationResponseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(locationResults: LocationSearchResponse)
 
+    // return live data from db with the given search query
     @Query("select * from location_search_results WHERE searchQuery = :query")
     fun searchForLocation(query: String): LiveData<LocationSearchResponse>
 
+    // return an object from the db with the given search query
     @Query("select * from location_search_results WHERE searchQuery = :query")
     fun searchForLocationNonLive(query: String): LocationSearchResponse?
 
+    // delete everything in the database
     @Query("delete from location_search_results")
     fun nukeTable()
 }

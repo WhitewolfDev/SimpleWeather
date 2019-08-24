@@ -26,6 +26,7 @@ import okhttp3.Dispatcher
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
+import java.util.*
 
 class ChooseCityFragment : ScopedFragment(), KodeinAware {
 
@@ -89,6 +90,7 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
             val re = Regex("[^A-Za-z0-9 ]")
             searchText = re.replace(search_box.text.toString(), "")
             searchText = searchText.trim()
+            searchText = searchText.toLowerCase(Locale.getDefault())
             locationViewModel.searchLocation(searchText)
             bindUI()
         } else

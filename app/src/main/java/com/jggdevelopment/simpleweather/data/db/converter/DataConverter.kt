@@ -80,6 +80,7 @@ class DataConverter {
         return gson.fromJson(dataString, type)
     }
 
+    // converts location search query list into a human readable string for the db
     @TypeConverter
     fun fromQueryList(data: List<String>): String {
         val builder = StringBuilder()
