@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jggdevelopment.simpleweather.R
 import com.jggdevelopment.simpleweather.data.db.entity.location.Feature
@@ -117,9 +118,15 @@ class ChooseCityFragment : ScopedFragment(), KodeinAware {
 
         groupAdapter.setOnItemClickListener { item, view ->
             (item as? LocationSearchResultListItem)?.let {
-                refreshWeather(it.feature.coordinates[0], it.feature.coordinates[1])
+
+                selectLocation(view, it.feature.coordinates[0], it.feature.coordinates[1])
             }
         }
+    }
+
+    private fun selectLocation(view: View, latitude: Double, longitude: Double) {
+        val actionLocationSelect = ChooseCityFragmentDirections.actionSelectLocation(latitude.toFloat(), longitude.toFloat())
+        Navigation.findNavController(view).navigate(actionLocationSelect)
     }
 
     private fun refreshWeather(latitude: Double, longitude: Double) = launch {

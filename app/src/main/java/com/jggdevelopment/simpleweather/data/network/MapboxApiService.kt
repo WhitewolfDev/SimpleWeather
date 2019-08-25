@@ -20,6 +20,8 @@ interface MapboxApiService {
     fun searchPlaces(
             @Path("endpoint") endpoint: String?,
             @Path("search_text") searchText: String?,
+            @Query("language") language: String?,
+            @Query("limit") limit: Int,
             @Query("access_token") accessToken: String
     ): Deferred<LocationSearchResponse>
 

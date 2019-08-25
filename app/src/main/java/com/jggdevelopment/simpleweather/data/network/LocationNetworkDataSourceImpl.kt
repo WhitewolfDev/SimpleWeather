@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jggdevelopment.simpleweather.BuildConfig
 import com.jggdevelopment.simpleweather.data.db.entity.location.LocationSearchResponse
 import com.jggdevelopment.simpleweather.internal.NoConnectivityException
+import java.util.*
 
 class LocationNetworkDataSourceImpl (
         private val mapboxApiService: MapboxApiService
@@ -18,7 +19,7 @@ class LocationNetworkDataSourceImpl (
     override suspend fun fetchLocationSearchResults(endpoint: String, query: String) {
         try {
             val fetchedLocationSearchResults = mapboxApiService
-                    .searchPlaces(endpoint, query, BuildConfig.mapboxAPI_KEY)
+                    .searchPlaces(endpoint, query, Locale.getDefault().language,10, BuildConfig.mapboxAPI_KEY)
                     .await()
 
             _downloadedLocationSearchResults.postValue(fetchedLocationSearchResults)

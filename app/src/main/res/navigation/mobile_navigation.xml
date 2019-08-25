@@ -8,7 +8,12 @@
     <fragment
         android:id="@+id/currentWeatherFragment"
         android:name="com.jggdevelopment.simpleweather.ui.weather.current.CurrentWeatherFragment"
-        android:label="CurrentWeatherFragment" />
+        android:label="CurrentWeatherFragment" >
+        <argument android:name="latitude"
+            app:argType="float" />
+        <argument android:name="longitude"
+            app:argType="float" />
+    </fragment>
     <fragment
         android:id="@+id/futureListWeatherFragment"
         android:name="com.jggdevelopment.simpleweather.ui.weather.future.list.FutureListWeatherFragment"
@@ -34,7 +39,7 @@
         android:label="fragment_choose_city"
         tools:layout="@layout/choose_city_fragment" >
         <action
-            android:id="@+id/city_search_result_chosen_action"
+            android:id="@+id/actionSelectLocation"
             app:destination="@id/currentWeatherFragment" />
     </fragment>
 </navigation>
